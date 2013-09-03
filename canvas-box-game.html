@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="cbgstyle.css">
+<title>Canvas Box Game</title>
+
+</head>
+<body>
+<div id="headSection">
+<h1 id="mainHead">Canvas Box Game</h1><br>
+</div>
+<canvas id="boxGame" width=750 height=500>Canvas didn't render.</canvas>
+
+<script>
+//creates frame request callback based on browser
+(function() {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+})();
+
+</script>
+</body>
+</html>
