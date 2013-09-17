@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<!-- loads jquery 1.10.2 from the CDN -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+
+<!-- if the CDN is unaccessible for some reason, load the local copy -->
+<script>
+if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='jquery-1.10.2.js' type='text/javascript'%3E%3C/script%3E"));
+}
+</script>
+
 <link rel="stylesheet" type="text/css" href="cbgstyle.css">
 <title>Canvas Box Game</title>
 
 </head>
 <body>
+<div id="app">
 <div id="headSection">
-<h1 id="mainHead">Canvas Box Game</h1><br>
+<h1 id="mainHead">Canvas Box Game</h1>
 </div>
 <canvas id="boxGame" width=750 height=500>Canvas didn't render.</canvas>
-
+</div>
 <script>
 //creates frame request callback based on browser
 (function() {
   var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   window.requestAnimationFrame = requestAnimationFrame;
 })();
+
 
 </script>
 </body>
