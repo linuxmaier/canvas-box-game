@@ -13,3 +13,16 @@ may move. Also contains fill style and border defaults*/
 	this.xVelocity = 0;
 	this.yVelocity = 0;
 }
+
+function Rectangle(xloc, yloc) {
+	Shape.call(this, xloc, yloc);
+//	this.x = arguments[0] ? arguments[0] : 0;
+//	this.y = arguments[1] ? arguments[1] : 0;
+}
+
+Rectangle.prototype = Object.create(Shape.prototype);
+Rectangle.prototype.constructor = Rectangle;
+
+testRect = new Rectangle(10, 20);
+
+alert(testRect.x);
