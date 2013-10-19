@@ -13,5 +13,3 @@ may move. Also contains fill style and border defaults*/
 	this.xVelocity = 0;
 	this.yVelocity = 0;
 }
-
-
