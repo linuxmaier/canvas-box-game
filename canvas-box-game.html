@@ -15,7 +15,6 @@ if (typeof jQuery == 'undefined') {
 <script type="text/javascript" src="physics.js"></script>
 <link rel="stylesheet" type="text/css" href="cbgstyle.css">
 
-<!-- begin page -->
 <title>Canvas Box Game</title>
 
 </head>
@@ -33,6 +32,19 @@ if (typeof jQuery == 'undefined') {
   window.requestAnimationFrame = requestAnimationFrame;
 })();
 
+var gameCanvas = document.getElementById("boxGame");
+var ctext = gameCanvas.getContext("2d");
+var startTime = (new Date()).getTime();
+
+var keys = [];
+
+document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
+
+document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
+
+testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D");
+
+testRect.draw(ctext);
 
 </script>
 </body>
