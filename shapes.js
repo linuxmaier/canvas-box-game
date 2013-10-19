@@ -14,10 +14,11 @@ may move. Also contains fill style and border defaults*/
 	this.yVelocity = 0;
 }
 
+/*Rectangle is the main game object. It needs to be controllable 
+by the player applying acceleration to it which will change the velocity*/
+
 function Rectangle(xloc, yloc) {
 	Shape.call(this, xloc, yloc);
-//	this.x = arguments[0] ? arguments[0] : 0;
-//	this.y = arguments[1] ? arguments[1] : 0;
 }
 
 Rectangle.prototype = Object.create(Shape.prototype);
