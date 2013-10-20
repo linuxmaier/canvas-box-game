@@ -22,7 +22,6 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	implement clever collision detection algorithm.
 
 	Thinking either first or second option works best for this.
-
 	*/
 
 	/* 
@@ -30,6 +29,8 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	test animations. Those are below:
 	*/
 
-	for (var i = 0; i < shapeArray.length; 
-
+	for (var i = 0; i < shapeArray.length; i++) {
+		i.move();
+		i.draw();
+	}
 }	
