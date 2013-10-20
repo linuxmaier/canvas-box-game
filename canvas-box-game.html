@@ -13,7 +13,7 @@ if (typeof jQuery == 'undefined') {
 <!-- load scripts and styles -->
 <script type="text/javascript" src="shapes.js"></script>
 <script type="text/javascript" src="physics.js"></script>
-<script type="text/javascript" src="animation.js"><script>
+<script type="text/javascript" src="animation.js"></script>
 <link rel="stylesheet" type="text/css" href="cbgstyle.css">
 
 <title>Canvas Box Game</title>
@@ -25,6 +25,7 @@ if (typeof jQuery == 'undefined') {
 <h1 id="mainHead">Canvas Box Game</h1>
 </div>
 <canvas id="boxGame" width=750 height=500>Canvas did not render.</canvas>
+
 </div>
 <script>
 //creates frame request callback based on browser
@@ -39,17 +40,21 @@ var startTime = (new Date()).getTime();
 
 var keys = [];
 
-//document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
+document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
 
-//document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
+document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
 
-testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D");
+var testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D");
 
 testRect.draw(ctext);
 
-testCirc = new Circle(125, 125, 50, "#FFFFFF");
+var testCirc = new Circle(125, 125, 50, "#FFFFFF");
 
 testCirc.draw(ctext);
+
+var shapeArray[testRect, testCirc];
+
+animate(shapeArray, ctext, gameCanvas, startTime);
 
 </script>
 </body>

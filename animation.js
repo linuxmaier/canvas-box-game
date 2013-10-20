@@ -11,4 +11,18 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 function animate (shapeArray, ctext, gameCanvas, startTime) {
 	var time = (new Date()).getTime() - startTime;
 	
-	for 
+	/*
+	I need to figure out how to impement object collision.
+
+	Possible solutions: determine upper limit to objects
+	
+	cut canvas into sections and determine where square 
+	is before detecting collisions with objects in its section.
+
+	implement clever collision detection algorithm.
+
+	Thinking either first or second option works best for this.
+
+	*/
+
+}	
