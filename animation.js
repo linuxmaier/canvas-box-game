@@ -25,4 +25,11 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 
 	*/
 
+	/* 
+	until I have that figured out, I'll just run some
+	test animations. Those are below:
+	*/
+
+	for (var i = 0; i < shapeArray.length; 
+
 }	
