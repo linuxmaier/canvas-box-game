@@ -29,7 +29,6 @@ Shape.prototype.move = function(time, xVel, yVel) {
 	}
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
-	console.info("moved x " + this.x + " and y " + this.y);
 }
 
 /*
@@ -62,7 +61,6 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.lineWidth = this.borderWidth;
 	ctext.strokeStyle = "black";
 	ctext.stroke();
-	console.info("drew rect");
 }
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
@@ -97,7 +95,6 @@ repositions the rectangle at the border.
 	else {
 		this.yVelocity *= -1;
 	}
-	console.info("rect yVel = " + this.yVelocity);
 
 }
 
@@ -130,7 +127,6 @@ Circle.prototype.draw = function(ctext) {
 	ctext.lineWidth = this.borderWidth;
 	ctext.strokeStyle = "black";
 	ctext.stroke();
-	console.info("drew circ");
 }
 
 Circle.prototype.borderAdjust = function(gameCanvas) {
@@ -165,5 +161,4 @@ repositions the circle at the border.
 	else {
 		this.yVelocity *= -1;
 	}
-	console.info("circ vel = " + this.xVelocity);
 }
