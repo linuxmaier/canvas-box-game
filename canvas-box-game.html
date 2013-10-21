@@ -45,35 +45,23 @@ document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;})
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
 
 var testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D");
-
-testRect.draw(ctext);
+testRect.yVelocity = .000000000005;
+testRect.xVelocity = .000000000001;
 
 var testCirc = new Circle(125, 125, 50, "#FFFFFF");
+testCirc.xVelocity = .000000000005;
 
-testCirc.draw(ctext);
+var testCirc2 = new Circle(75, 150, 30, "#66FF99");
+testCirc2.xVelocity = .00000000001;
+testCirc2.yVelocity = .000000000005;
 
-var shapeArray = [testRect, testCirc];
+var testRect2 = new Rectangle(10, 100, 40, 60, "#000000");
+testRect2.xVelocity = .000000000007;
+testRect2.yVelocity = .000000000003;
 
-//animate(shapeArray, ctext, gameCanvas, startTime);
+var shapeArray = [testRect, testCirc, testCirc2, testRect2];
 
-testCirc.xVelocity = .000000000005
-
-function slideCircle(testCirc, testRect, ctext, gameCanvas, startTime) {
-	time = (new Date()).getTime() - startTime;
-	testCirc.move(time);
-	testCirc.borderAdjust(gameCanvas);
-
-	if ((testCirc.x == gameCanvas.width - testCirc.radius) || (testCirc.x == testCirc.radius)) {
-		testCirc.xVelocity *= -1;
-	}
-	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-	testRect.draw(ctext);
-	testCirc.draw(ctext);
-	requestAnimationFrame(function() {slideCircle(testCirc, testRect, ctext, gameCanvas, time)});
-}
-
-slideCircle(testCirc, testRect, ctext, gameCanvas, startTime);
-
+animate(shapeArray, ctext, gameCanvas, startTime);
 </script>
 </body>
 </html>

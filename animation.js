@@ -9,6 +9,7 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 */
 
 function animate (shapeArray, ctext, gameCanvas, startTime) {
+	console.info("starting frame");
 	var time = (new Date()).getTime() - startTime;
 	
 	/*
@@ -28,9 +29,14 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	until I have that figured out, I'll just run some
 	test animations. Those are below:
 	*/
+	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
 	for (var i = 0; i < shapeArray.length; i++) {
-		i.move();
-		i.draw();
+		shapeArray[i].move(time);
+		shapeArray[i].borderAdjust(gameCanvas);
+		shapeArray[i].draw(ctext);
 	}
+	console.info("requesting new frame");
+
+	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
 }	

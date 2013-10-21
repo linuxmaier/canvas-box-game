@@ -29,6 +29,7 @@ Shape.prototype.move = function(time, xVel, yVel) {
 	}
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
+	console.info("moved x " + this.x + " and y " + this.y);
 }
 
 /*
@@ -61,6 +62,43 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.lineWidth = this.borderWidth;
 	ctext.strokeStyle = "black";
 	ctext.stroke();
+	console.info("drew rect");
+}
+
+Rectangle.prototype.borderAdjust = function(gameCanvas) {
+/*
+runs interactions with the border of the playing area for rectangles.
+Needs to be differnt than for Circles because of different way of 
+calculating the distance from the right/bottom border.
+
+Determines if the rectangle is positioned beyond the border. If so,
+repositions the rectangle at the border.
+*/
+	//deals with x border
+	this.xVelocity *= -1;
+	if (this.x >= gameCanvas.width - this.width) {
+		this.x = gameCanvas.width - this.width;
+	}
+	else if (this.x <= 0) {
+		this.x = 0;
+	}
+	else {
+		this.xVelocity *= -1;
+	}
+	
+	//deals with y border
+	this.yVelocity *= -1;
+	if (this.y >= gameCanvas.height - this.height) {
+		this.y = gameCanvas.height - this.height;
+	}
+	else if (this.y <= 0) {
+		this.y = 0;
+	}
+	else {
+		this.yVelocity *= -1;
+	}
+	console.info("rect yVel = " + this.yVelocity);
+
 }
 
 /*
@@ -92,6 +130,7 @@ Circle.prototype.draw = function(ctext) {
 	ctext.lineWidth = this.borderWidth;
 	ctext.strokeStyle = "black";
 	ctext.stroke();
+	console.info("drew circ");
 }
 
 Circle.prototype.borderAdjust = function(gameCanvas) {
@@ -104,18 +143,27 @@ Determines if the circle is positioned beyond the border. If so,
 repositions the circle at the border.
 */
 	//deals with x border
+	this.xVelocity *= -1;
 	if (this.x >= gameCanvas.width - this.radius) {
 		this.x = gameCanvas.width - this.radius;
 	}
 	else if (this.x <= 0 + this.radius) {
 		this.x = 0 + this.radius;
 	}
+	else {
+		this.xVelocity *= -1;
+	}
 	
 	//deals with y border
+	this.yVelocity *= -1;
 	if (this.y >= gameCanvas.height - this.radius) {
 		this.y = gameCanvas.height - this.radius;
 	}
 	else if (this.y <= 0 + this.radius) {
 		this.y = 0 +this.radius;
 	}
+	else {
+		this.yVelocity *= -1;
+	}
+	console.info("circ vel = " + this.xVelocity);
 }
