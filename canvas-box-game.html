@@ -56,6 +56,23 @@ var shapeArray = [testRect, testCirc];
 
 //animate(shapeArray, ctext, gameCanvas, startTime);
 
+
+
+function slideCircle(testCirc, testRect, ctext, gameCanvas, vel, startTime) {
+	time = (new Date()).getTime() - startTime;
+	testCirc.move(vel, 0, gameCanvas, time);
+
+	if ((testCirc.x == gameCanvas.width - testCirc.radius) || (testCirc.x == testCirc.radius)) {
+		vel *= -1;
+	}
+	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+	testRect.draw(ctext);
+	testCirc.draw(ctext);
+	requestAnimationFrame(function() {slideCircle(testCirc, testRect, ctext, gameCanvas, vel, time)});
+}
+
+slideCircle(testCirc, testRect, ctext, gameCanvas, .000000000005, startTime);
+
 </script>
 </body>
 </html>

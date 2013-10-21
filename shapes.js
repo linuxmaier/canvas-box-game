@@ -77,21 +77,21 @@ Circle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Circle.prototype.move(xVel, yVel, canvas) {
-	this.x += xVel;
-	this.y += yVel;
+Circle.prototype.move = function(xVel, yVel, canvas, time) {
+	this.x += xVel * time;
+	this.y += yVel * time;
 
 	if (this.x >= canvas.width - this.radius) {
 		this.x = canvas.width - this.radius;
 	}
-	else if (this.x <= radius) {
-		this.x = radius;
+	else if (this.x <= this.radius) {
+		this.x = this.radius;
 	}
 
 	if (this.y >= canvas.height - this.radius) {
-		this.y = canvas.height - this.radius);
+		this.y = canvas.height - this.radius;
 	}
-	else if (this.y <= radius) {
-		this.y = radius;
+	else if (this.y <= this.radius) {
+		this.y = this.radius;
 	}
 }
