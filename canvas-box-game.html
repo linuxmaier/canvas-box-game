@@ -56,22 +56,23 @@ var shapeArray = [testRect, testCirc];
 
 //animate(shapeArray, ctext, gameCanvas, startTime);
 
+testCirc.xVelocity = .000000000005
 
-
-function slideCircle(testCirc, testRect, ctext, gameCanvas, vel, startTime) {
+function slideCircle(testCirc, testRect, ctext, gameCanvas, startTime) {
 	time = (new Date()).getTime() - startTime;
-	testCirc.move(vel, 0, gameCanvas, time);
+	testCirc.move(time);
+	testCirc.borderAdjust(gameCanvas);
 
 	if ((testCirc.x == gameCanvas.width - testCirc.radius) || (testCirc.x == testCirc.radius)) {
-		vel *= -1;
+		testCirc.xVelocity *= -1;
 	}
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 	testRect.draw(ctext);
 	testCirc.draw(ctext);
-	requestAnimationFrame(function() {slideCircle(testCirc, testRect, ctext, gameCanvas, vel, time)});
+	requestAnimationFrame(function() {slideCircle(testCirc, testRect, ctext, gameCanvas, time)});
 }
 
-slideCircle(testCirc, testRect, ctext, gameCanvas, .000000000005, startTime);
+slideCircle(testCirc, testRect, ctext, gameCanvas, startTime);
 
 </script>
 </body>

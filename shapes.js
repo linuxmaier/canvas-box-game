@@ -14,6 +14,23 @@ may move. Also contains fill style and border defaults*/
 	this.yVelocity = 0;
 }
 
+Shape.prototype.move = function(time, xVel, yVel) {
+	/*time is required, xVel and yVel are optional
+	
+	changes position of object based on current or
+	provided velocity multiplied by time.
+	*/
+	
+	if (arguments[1]) {
+		this.xVelocity = xVel;
+	}
+	if (arguments[2]) {
+		this.yVelocity = yVel;
+	}
+	this.x += this.xVelocity * time;
+	this.y += this.yVelocity * time;
+}
+
 /*
 
 Rectangle is the main game object. It needs to be controllable 
@@ -44,7 +61,7 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.lineWidth = this.borderWidth;
 	ctext.strokeStyle = "black";
 	ctext.stroke();
-};
+}
 
 /*
 
@@ -77,21 +94,28 @@ Circle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Circle.prototype.move = function(xVel, yVel, canvas, time) {
-	this.x += xVel * time;
-	this.y += yVel * time;
+Circle.prototype.borderAdjust = function(gameCanvas) {
+/*
+runs interactions with the border of the playing area for circles.
+Needs to be differnt than for Rects because of different way of 
+calculating the distance from the right/bottom border.
 
-	if (this.x >= canvas.width - this.radius) {
-		this.x = canvas.width - this.radius;
+Determines if the circle is positioned beyond the border. If so,
+repositions the circle at the border.
+*/
+	//deals with x border
+	if (this.x >= gameCanvas.width - this.radius) {
+		this.x = gameCanvas.width - this.radius;
 	}
-	else if (this.x <= this.radius) {
-		this.x = this.radius;
+	else if (this.x <= 0 + this.radius) {
+		this.x = 0 + this.radius;
 	}
-
-	if (this.y >= canvas.height - this.radius) {
-		this.y = canvas.height - this.radius;
+	
+	//deals with y border
+	if (this.y >= gameCanvas.height - this.radius) {
+		this.y = gameCanvas.height - this.radius;
 	}
-	else if (this.y <= this.radius) {
-		this.y = this.radius;
+	else if (this.y <= 0 + this.radius) {
+		this.y = 0 +this.radius;
 	}
 }
