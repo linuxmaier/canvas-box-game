@@ -70,7 +70,7 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Rectangle.prototype.borderAdjust = function(gameCanvas) {
+Rectangle.prototype.borderAdjust = function(gameCanvas, physics) {
 /*
 runs interactions with the border of the playing area for rectangles.
 Needs to be differnt than for Circles because of different way of 
@@ -88,7 +88,7 @@ repositions the rectangle at the border.
 		this.x = 0;
 	}
 	else {
-		this.xVelocity *= -1;
+		this.xVelocity *= physics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -100,7 +100,7 @@ repositions the rectangle at the border.
 		this.y = 0;
 	}
 	else {
-		this.yVelocity *= -1;
+		this.yVelocity *= physics.eAbsorb;
 	}
 
 }
@@ -136,7 +136,7 @@ Circle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Circle.prototype.borderAdjust = function(gameCanvas) {
+Circle.prototype.borderAdjust = function(gameCanvas, physics) {
 /*
 runs interactions with the border of the playing area for circles.
 Needs to be differnt than for Rects because of different way of 
@@ -154,7 +154,7 @@ repositions the circle at the border.
 		this.x = 0 + this.radius;
 	}
 	else {
-		this.xVelocity *= -1;
+		this.xVelocity *= physics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -166,6 +166,6 @@ repositions the circle at the border.
 		this.y = 0 +this.radius;
 	}
 	else {
-		this.yVelocity *= -1;
+		this.yVelocity *= physics.eAbsorb;
 	}
 }

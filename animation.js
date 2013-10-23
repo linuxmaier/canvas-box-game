@@ -32,7 +32,7 @@ function animate (shapeArray, ctext, gameCanvas, physics, startTime) {
 
 	for (var i = 0; i < shapeArray.length; i++) {
 		shapeArray[i].move(time, physics);
-		shapeArray[i].borderAdjust(gameCanvas);
+		shapeArray[i].borderAdjust(gameCanvas, physics);
 		shapeArray[i].draw(ctext);
 	}
 

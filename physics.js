@@ -8,7 +8,7 @@ var gamePhysics = {
 	//top limit on speed for objects to move
 	maxSpeed: 100,
 	//energy absorbtion by walls
-	eAbsorb: .75
+	eAbsorb: -1
 };
 
 
