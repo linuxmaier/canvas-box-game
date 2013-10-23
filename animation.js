@@ -9,7 +9,7 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 */
 
 function animate (shapeArray, ctext, gameCanvas, physics, startTime) {
-	var time = (new Date()).getTime() - startTime;
+	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
 	/*
 	I need to figure out how to impement object collision.

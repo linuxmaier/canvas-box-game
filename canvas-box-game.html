@@ -45,21 +45,26 @@ document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;})
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
 
 var testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D");
-testRect.yVelocity = .000000000005;
-testRect.xVelocity = .000000000001;
+testRect.yVelocity = 5;
+testRect.xVelocity = 10;
 
 var testCirc = new Circle(125, 125, 50, "#FFFFFF");
-testCirc.xVelocity = .000000000005;
+testCirc.xVelocity = 5;
 
 var testCirc2 = new Circle(75, 150, 30, "#66FF99");
-testCirc2.xVelocity = .00000000001;
-testCirc2.yVelocity = .000000000005;
+testCirc2.xVelocity = 10;
+testCirc2.yVelocity = 5;
 
 var testRect2 = new Rectangle(10, 100, 40, 60, "#000000");
-testRect2.xVelocity = .000000000007;
-testRect2.yVelocity = .000000000003;
+testRect2.xVelocity = 7;
+testRect2.yVelocity = 3;
 
-var shapeArray = [testRect, testCirc, testCirc2, testRect2];
+
+var testRect3 = new Rectangle(100, 150, 40, 60, "#000000");
+testRect3.xVelocity = 3;
+testRect3.yVelocity = 10;
+
+var shapeArray = [testRect, testCirc, testCirc2, testRect2, testRect3];
 
 animate(shapeArray, ctext, gameCanvas, gamePhysics, startTime);
 </script>
