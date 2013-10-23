@@ -14,18 +14,25 @@ may move. Also contains fill style and border defaults*/
 	this.yVelocity = 0;
 }
 
-Shape.prototype.move = function(time, xVel, yVel) {
+Shape.prototype.move = function(time, physics, xVel, yVel) {
 	/*time is required, xVel and yVel are optional
 	
 	changes position of object based on current or
 	provided velocity multiplied by time.
 	*/
 	
-	if (arguments[1]) {
-		this.xVelocity = xVel;
-	}
 	if (arguments[2]) {
-		this.yVelocity = yVel;
+		this.xVelocity = (xVel <= physics.maxSpeed) ? xVel : physics.maxSpeed;
+	}
+	else {
+		this.xVelocity = (this.xVelocity <= physics.maxSpeed) ? this.xVelocity : physics.maxSpeed;
+	}
+
+	if (arguments[3]) {
+		this.yVelocity = (yVel <= physics.maxSpeed) ? yVel : physics.maxSpeed;
+	}
+	else {
+		this.yVelocity = (this.yVelocity <= physics.maxSpeed) ? this.yVelocity : physics.maxSpeed;
 	}
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
