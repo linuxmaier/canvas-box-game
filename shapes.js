@@ -69,7 +69,20 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-//Rectangle.prototype.applyAccel = function(
+Rectangle.prototype.applyAccel = function(time, dimension) {
+	var newVel = 0;
+	
+	if (dimension == "x") {
+		if (keys[37]) {
+			newVel += gamePhysics.acceleration * time * -1;
+		}
+		if (keys[39]) {
+			newVel += gamePhysics.acceleration * time;
+		}
+	}
+	if (dimension == "y"
+	
+}
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
 /*
