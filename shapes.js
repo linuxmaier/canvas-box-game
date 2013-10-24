@@ -1,5 +1,5 @@
 
-function Shape(xloc, yloc, fillStyle) {
+function Shape(xloc, yloc, fillStyle, controlled) {
 
 /*super class that contains all shapes in game. includes location
 and velocity info, since all objects will have location and some
@@ -11,28 +11,22 @@ may move. Also contains fill style and border defaults*/
 	this.borderWidth = 1;
 	this.xVelocity = 0;
 	this.yVelocity = 0;
+	this.control = controlled;
 }
 
-Shape.prototype.move = function(time, xVel, yVel) {
-	/*time is required, xVel and yVel are optional
+Shape.prototype.move = function(time) {
+	/*time is required
 	
 	changes position of object based on current or
-	provided velocity multiplied by time.
+	provided velocity multiplied by time. Also ensures
+	that velocity doesn't exceed the physics' maxSpeed
 	*/
-	
-	if (arguments[2]) {
-		this.xVelocity = (xVel <= gamePhysics.maxSpeed) ? xVel : gamePhysics.maxSpeed;
-	}
-	else {
-		this.xVelocity = (this.xVelocity <= gamePhysics.maxSpeed) ? this.xVelocity : gamePhysics.maxSpeed;
-	}
+	if (this.xVelocity >= gamePhysics.maxSpeed) { this.xVelocity = gamePhysics.maxSpeed; }
+	else if (this.xVelocity <= -gamePhysics.maxSpeed) { this.xVelocity = -gamePhysics.maxSpeed; }
 
-	if (arguments[3]) {
-		this.yVelocity = (yVel <= gamePhysics.maxSpeed) ? yVel : gamePhysics.maxSpeed;
-	}
-	else {
-		this.yVelocity = (this.yVelocity <= gamePhysics.maxSpeed) ? this.yVelocity : gamePhysics.maxSpeed;
-	}
+	if (this.yVelocity >= gamePhysics.maxSpeed) { this.yVelocity = gamePhysics.maxSpeed; }
+	else if (this.yVelocity <= -gamePhysics.maxSpeed) { this.yVelocity = -gamePhysics.maxSpeed; }
+	
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
 }
@@ -46,8 +40,8 @@ Inherits from Shape
 
 */
 
-function Rectangle(xloc, yloc, width, height, fillStyle) {
-	Shape.call(this, xloc, yloc, fillStyle);
+function Rectangle(xloc, yloc, width, height, fillStyle, controlled) {
+	Shape.call(this, xloc, yloc, fillStyle, controlled);
 	this.width = width;
 	this.height = height;
 }
@@ -69,20 +63,36 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Rectangle.prototype.applyAccel = function(time, dimension) {
-	var newVel = 0;
-	
-	if (dimension == "x") {
+
+
+Rectangle.prototype.applyAccel = function(time) {
+	var xVel = 0;
+	var yVel = 0;
+	if (this.control) {
 		if (keys[37]) {
-			newVel += gamePhysics.acceleration * time * -1;
+			xVel += gamePhysics.acceleration * time * -1;
 		}
 		if (keys[39]) {
-			newVel += gamePhysics.acceleration * time;
+			xVel += gamePhysics.acceleration * time;
+		}
+	
+		if (keys[38]) {
+			yVel += gamePhysics.acceleration * time * -1;
+		}
+		if (keys[40]) {
+			yVel += gamePhysics.acceleration * time;
 		}
 	}
-	if (dimension == "y"
-	
+
+	this.xVelocity += xVel;
+	this.yVelocity += yVel;
+	if (this.control) {
+		this.xVelocity *= gamePhysics.surfaceFric;
+		this.yVelocity *= gamePhysics.surfaceFric;
+	}
 }
+
+
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
 /*
@@ -149,6 +159,13 @@ Circle.prototype.draw = function(ctext) {
 	ctext.strokeStyle = "black";
 	ctext.stroke();
 }
+
+/*
+DESIGN DECISIONS REQUIRED BEFORE MUCKING WITH THIS
+Circle.prototype.applyAccel = function(time) {
+	this.yVelocity += gamePhysics.accerlation * -time;
+}
+*/
 
 Circle.prototype.borderAdjust = function(gameCanvas) {
 /*

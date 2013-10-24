@@ -9,6 +9,8 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 */
 
 function animate (shapeArray, ctext, gameCanvas, startTime) {
+	//this is the time elapsed since the last frame. The divisor is 
+	//arbitrary, chosen by what feels right.
 	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
 	/*
@@ -31,6 +33,7 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
 	for (var i = 0; i < shapeArray.length; i++) {
+		if (shapeArray[i].control) { shapeArray[i].applyAccel(time); }
 		shapeArray[i].move(time);
 		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);
