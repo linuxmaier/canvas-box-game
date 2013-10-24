@@ -8,7 +8,7 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 
 */
 
-function animate (shapeArray, ctext, gameCanvas, physics, startTime) {
+function animate (shapeArray, ctext, gameCanvas, startTime) {
 	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
 	/*
@@ -31,10 +31,10 @@ function animate (shapeArray, ctext, gameCanvas, physics, startTime) {
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
 	for (var i = 0; i < shapeArray.length; i++) {
-		shapeArray[i].move(time, physics);
-		shapeArray[i].borderAdjust(gameCanvas, physics);
+		shapeArray[i].move(time);
+		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);
 	}
 
-	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, physics, time)});
+	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
 }	

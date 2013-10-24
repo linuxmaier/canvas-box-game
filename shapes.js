@@ -5,16 +5,15 @@ function Shape(xloc, yloc, fillStyle) {
 and velocity info, since all objects will have location and some
 may move. Also contains fill style and border defaults*/
 
-	//x and y are either xloc and yloc, or if no parameters become 0
-	this.x = arguments[0] ? arguments[0] : 0;
-	this.y = arguments[1] ? arguments[1] : 0;
+	this.x = xloc;
+	this.y = yloc;
 	this.fillStyle = fillStyle;
 	this.borderWidth = 1;
 	this.xVelocity = 0;
 	this.yVelocity = 0;
 }
 
-Shape.prototype.move = function(time, physics, xVel, yVel) {
+Shape.prototype.move = function(time, xVel, yVel) {
 	/*time is required, xVel and yVel are optional
 	
 	changes position of object based on current or
@@ -22,17 +21,17 @@ Shape.prototype.move = function(time, physics, xVel, yVel) {
 	*/
 	
 	if (arguments[2]) {
-		this.xVelocity = (xVel <= physics.maxSpeed) ? xVel : physics.maxSpeed;
+		this.xVelocity = (xVel <= gamePhysics.maxSpeed) ? xVel : gamePhysics.maxSpeed;
 	}
 	else {
-		this.xVelocity = (this.xVelocity <= physics.maxSpeed) ? this.xVelocity : physics.maxSpeed;
+		this.xVelocity = (this.xVelocity <= gamePhysics.maxSpeed) ? this.xVelocity : gamePhysics.maxSpeed;
 	}
 
 	if (arguments[3]) {
-		this.yVelocity = (yVel <= physics.maxSpeed) ? yVel : physics.maxSpeed;
+		this.yVelocity = (yVel <= gamePhysics.maxSpeed) ? yVel : gamePhysics.maxSpeed;
 	}
 	else {
-		this.yVelocity = (this.yVelocity <= physics.maxSpeed) ? this.yVelocity : physics.maxSpeed;
+		this.yVelocity = (this.yVelocity <= gamePhysics.maxSpeed) ? this.yVelocity : gamePhysics.maxSpeed;
 	}
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
@@ -70,7 +69,9 @@ Rectangle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Rectangle.prototype.borderAdjust = function(gameCanvas, physics) {
+//Rectangle.prototype.applyAccel = function(
+
+Rectangle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for rectangles.
 Needs to be differnt than for Circles because of different way of 
@@ -88,7 +89,7 @@ repositions the rectangle at the border.
 		this.x = 0;
 	}
 	else {
-		this.xVelocity *= physics.eAbsorb;
+		this.xVelocity *= gamePhysics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -100,7 +101,7 @@ repositions the rectangle at the border.
 		this.y = 0;
 	}
 	else {
-		this.yVelocity *= physics.eAbsorb;
+		this.yVelocity *= gamePhysics.eAbsorb;
 	}
 
 }
@@ -136,7 +137,7 @@ Circle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-Circle.prototype.borderAdjust = function(gameCanvas, physics) {
+Circle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for circles.
 Needs to be differnt than for Rects because of different way of 
@@ -154,7 +155,7 @@ repositions the circle at the border.
 		this.x = 0 + this.radius;
 	}
 	else {
-		this.xVelocity *= physics.eAbsorb;
+		this.xVelocity *= gamePhysics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -166,6 +167,6 @@ repositions the circle at the border.
 		this.y = 0 +this.radius;
 	}
 	else {
-		this.yVelocity *= physics.eAbsorb;
+		this.yVelocity *= gamePhysics.eAbsorb;
 	}
 }
