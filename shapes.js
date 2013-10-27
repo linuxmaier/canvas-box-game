@@ -1,5 +1,5 @@
 
-function Shape(xloc, yloc, fillStyle, controlled) {
+function Shape(xloc, yloc, fillStyle, controlled, physics) {
 
 /*super class that contains all shapes in game. includes location
 and velocity info, since all objects will have location and some
@@ -12,6 +12,7 @@ may move. Also contains fill style and border defaults*/
 	this.xVelocity = 0;
 	this.yVelocity = 0;
 	this.control = controlled;
+	this.physics = gamePhysics;
 }
 
 Shape.prototype.move = function(time) {
@@ -40,10 +41,11 @@ Inherits from Shape
 
 */
 
-function Rectangle(xloc, yloc, width, height, fillStyle, controlled) {
-	Shape.call(this, xloc, yloc, fillStyle, controlled);
+function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, keys) {
+	Shape.call(this, xloc, yloc, fillStyle, controlled, physics);
 	this.width = width;
 	this.height = height;
+	this.key = keys;
 }
 
 Rectangle.prototype = Object.create(Shape.prototype);

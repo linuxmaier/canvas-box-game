@@ -44,28 +44,11 @@ document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;})
 
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
 
-var testRect = new Rectangle(0, 0, 150, 150, "#4DFF4D", true);
+testRect1 = new Rectangle(0, 0, 100, 50, "#FFFFFF", true, gamePhysics, keys);
 
-var testCirc = new Circle(125, 125, 50, "#FFFFFF");
-testCirc.xVelocity = 10;
+testRect2 = new Rectangle(200, 0, 50, 100, "#000000", true, gamePhysics, keys);
 
-var testCirc2 = new Circle(75, 150, 30, "#66FF99");
-testCirc2.xVelocity = 20;
-testCirc2.yVelocity = 10;
-
-var testRect2 = new Rectangle(10, 100, 40, 60, "#000000");
-testRect2.xVelocity = 14;
-testRect2.yVelocity = 6;
-
-var testRect3 = new Rectangle(150, 200, 80, 20, "#3399FF");
-testRect3.xVelocity = 25;
-testRect3.yVelocity = 4;
-
-var testCirc3 = new Circle(200, 400, 10, "#FF0066");
-testCirc3.xVelocity = 3;
-testCirc3.yVelocity = 50;
-
-var shapeArray = [testRect, testCirc, testCirc2, testRect2, testRect3, testCirc3];
+var shapeArray = [testRect1, testRect2];
 
 animate(shapeArray, ctext, gameCanvas, startTime);
 </script>
