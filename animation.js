@@ -33,7 +33,7 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
 	for (var i = 0; i < shapeArray.length; i++) {
-		if (shapeArray[i].control) { shapeArray[i].applyAccel(time); }
+		shapeArray[i].applyAccel(time); 
 		shapeArray[i].move(time);
 		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);

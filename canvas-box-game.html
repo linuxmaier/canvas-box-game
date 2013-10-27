@@ -87,7 +87,10 @@ testCirc1.yVelocity = 1;
 
 //objects in shapeArray are drawn in animation.js
 var shapeArray = [testRect1, testRect2, testCirc1];
-animate(shapeArray, ctext, gameCanvas, startTime);
+requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, startTime);});
+
+setTimeout(function() {alert(testCirc1.x);}, 1500);
+
 </script>
 </body>
 </html>

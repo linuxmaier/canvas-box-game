@@ -144,8 +144,8 @@ Inherits from Shape
 
 */
 
-function Circle(xloc, yloc, radius, fillStyle) {
-	Shape.call(this, xloc, yloc, fillStyle);
+function Circle(xloc, yloc, radius, fillStyle, controlled, physics) {
+	Shape.call(this, xloc, yloc, fillStyle, controlled, physics);
 	this.radius = radius;
 }
 
@@ -166,12 +166,9 @@ Circle.prototype.draw = function(ctext) {
 	ctext.stroke();
 }
 
-/*
-DESIGN DECISIONS REQUIRED BEFORE MUCKING WITH THIS
 Circle.prototype.applyAccel = function(time) {
-	this.yVelocity += gamePhysics.accerlation * -time;
+	return null;
 }
-*/
 
 Circle.prototype.borderAdjust = function(gameCanvas) {
 /*
@@ -206,3 +203,4 @@ repositions the circle at the border.
 		this.yVelocity *= gamePhysics.eAbsorb;
 	}
 }
+
