@@ -41,11 +41,15 @@ Inherits from Shape
 
 */
 
-function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, keys) {
+function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, keys, keymap) {
 	Shape.call(this, xloc, yloc, fillStyle, controlled, physics);
 	this.width = width;
 	this.height = height;
-	this.key = keys;
+	this.keys = keys;
+	this.l = keymap[0];
+	this.u = keymap[1];
+	this.r = keymap[2];
+	this.d = keymap[3];
 }
 
 Rectangle.prototype = Object.create(Shape.prototype);
@@ -71,17 +75,17 @@ Rectangle.prototype.applyAccel = function(time) {
 	var xVel = 0;
 	var yVel = 0;
 	if (this.control) {
-		if (keys[37]) {
+		if (this.keys[this.l]) {
 			xVel += gamePhysics.acceleration * time * -1;
 		}
-		if (keys[39]) {
+		if (this.keys[this.r]) {
 			xVel += gamePhysics.acceleration * time;
 		}
 	
-		if (keys[38]) {
+		if (this.keys[this.u]) {
 			yVel += gamePhysics.acceleration * time * -1;
 		}
-		if (keys[40]) {
+		if (this.keys[this.d]) {
 			yVel += gamePhysics.acceleration * time;
 		}
 	}
