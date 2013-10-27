@@ -12,7 +12,7 @@ may move. Also contains fill style and border defaults*/
 	this.xVelocity = 0;
 	this.yVelocity = 0;
 	this.control = controlled;
-	this.physics = gamePhysics;
+	this.physics = physics;
 }
 
 Shape.prototype.move = function(time) {
@@ -22,11 +22,11 @@ Shape.prototype.move = function(time) {
 	provided velocity multiplied by time. Also ensures
 	that velocity doesn't exceed the physics' maxSpeed
 	*/
-	if (this.xVelocity >= gamePhysics.maxSpeed) { this.xVelocity = gamePhysics.maxSpeed; }
-	else if (this.xVelocity <= -gamePhysics.maxSpeed) { this.xVelocity = -gamePhysics.maxSpeed; }
+	if (this.xVelocity >= this.physics.maxSpeed) { this.xVelocity = this.physics.maxSpeed; }
+	else if (this.xVelocity <= -this.physics.maxSpeed) { this.xVelocity = -this.physics.maxSpeed; }
 
-	if (this.yVelocity >= gamePhysics.maxSpeed) { this.yVelocity = gamePhysics.maxSpeed; }
-	else if (this.yVelocity <= -gamePhysics.maxSpeed) { this.yVelocity = -gamePhysics.maxSpeed; }
+	if (this.yVelocity >= this.physics.maxSpeed) { this.yVelocity = this.physics.maxSpeed; }
+	else if (this.yVelocity <= -this.physics.maxSpeed) { this.yVelocity = -this.physics.maxSpeed; }
 	
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
@@ -76,25 +76,25 @@ Rectangle.prototype.applyAccel = function(time) {
 	var yVel = 0;
 	if (this.control) {
 		if (this.keys[this.l]) {
-			xVel += gamePhysics.acceleration * time * -1;
+			xVel += this.physics.acceleration * time * -1;
 		}
 		if (this.keys[this.r]) {
-			xVel += gamePhysics.acceleration * time;
+			xVel += this.physics.acceleration * time;
 		}
 	
 		if (this.keys[this.u]) {
-			yVel += gamePhysics.acceleration * time * -1;
+			yVel += this.physics.acceleration * time * -1;
 		}
 		if (this.keys[this.d]) {
-			yVel += gamePhysics.acceleration * time;
+			yVel += this.physics.acceleration * time;
 		}
 	}
 
 	this.xVelocity += xVel;
 	this.yVelocity += yVel;
 	if (this.control) {
-		this.xVelocity *= gamePhysics.surfaceFric;
-		this.yVelocity *= gamePhysics.surfaceFric;
+		this.xVelocity *= this.physics.surfaceFric;
+		this.yVelocity *= this.physics.surfaceFric;
 	}
 }
 
@@ -118,7 +118,7 @@ repositions the rectangle at the border.
 		this.x = 0;
 	}
 	else {
-		this.xVelocity *= gamePhysics.eAbsorb;
+		this.xVelocity *= this.physics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -130,7 +130,7 @@ repositions the rectangle at the border.
 		this.y = 0;
 	}
 	else {
-		this.yVelocity *= gamePhysics.eAbsorb;
+		this.yVelocity *= this.physics.eAbsorb;
 	}
 
 }
@@ -144,9 +144,13 @@ Inherits from Shape
 
 */
 
-function Circle(xloc, yloc, radius, fillStyle, controlled, physics) {
-	Shape.call(this, xloc, yloc, fillStyle, controlled, physics);
+function Circle(xloc, yloc, radius, fillStyle, physics) {
+	Shape.call(this, xloc, yloc, fillStyle, false, physics);
 	this.radius = radius;
+	this.circAccel = 25;
+	this.timer = false;
+	this.xAccel = 0;
+	this.yAccel = 0;
 }
 
 Circle.prototype = Object.create(Shape.prototype);
@@ -167,9 +171,22 @@ Circle.prototype.draw = function(ctext) {
 }
 
 Circle.prototype.applyAccel = function(time) {
-	return null;
+	if (!this.timer) {
+		console.info("timer off");
+		setTimeout(function() {
+			console.info("timeout ran");
+			var angle = Math.random() * 2 * Math.PI;
+	
+			this.xAccel = this.circAccel * Math.cos(angle);
+			this.yAccel = this.circAccel * Math.sin(angle);
+			console.info("xAccel is " + this.xAccel + " and yAccel is " + this.yAccel);
+			this.timer = false;
+		}.bind(this), Math.random() * 5000 + 5000);
+		this.timer = true;
+	}
+	this.xVelocity += this.xAccel * time;
+	this.yVelocity += this.yAccel * time;
 }
-
 Circle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for circles.
@@ -188,7 +205,7 @@ repositions the circle at the border.
 		this.x = 0 + this.radius;
 	}
 	else {
-		this.xVelocity *= gamePhysics.eAbsorb;
+		this.xVelocity *= this.physics.eAbsorb;
 	}
 	
 	//deals with y border
@@ -200,7 +217,7 @@ repositions the circle at the border.
 		this.y = 0 +this.radius;
 	}
 	else {
-		this.yVelocity *= gamePhysics.eAbsorb;
+		this.yVelocity *= this.physics.eAbsorb;
 	}
 }
 
