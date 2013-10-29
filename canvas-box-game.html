@@ -54,7 +54,7 @@ if (!Array.prototype.indexOf) {
 <div id="headSection">
 <h1 id="mainHead">Canvas Box Game</h1>
 </div>
-<canvas id="boxGame" width=750 height=500>Canvas did not render.</canvas>
+<canvas id="boxGame" width=1200 height=720>Canvas did not render.</canvas>
 
 </div>
 <script>
@@ -85,9 +85,11 @@ testCirc1 = new Circle(100, 100, 30, "#DDDDDD", gamePhysics);
 testCirc2 = new Circle(50, 200, 40, "#222222", gamePhysics);
 testCirc3 = new Circle(200, 300, 50, "#AAAAAA", gamePhysics);
 testCirc4 = new Circle(20, 20, 20, "#888888", gamePhysics);
+testCirc5 = new Circle(500, 100, 45, "#444444", gamePhysics);
+testCirc6 = new Circle(75, 600, 25, "#666666", gamePhysics);
 
 //objects in shapeArray are drawn in animation.js
-var shapeArray = [testRect1, testRect2, testCirc1, testCirc2, testCirc3, testCirc4];
+var shapeArray = [testRect1, testRect2, testCirc1, testCirc2, testCirc3, testCirc4, testCirc5, testCirc6];
 requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, startTime);});
 </script>
 </body>

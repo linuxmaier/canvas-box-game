@@ -110,7 +110,7 @@ Determines if the rectangle is positioned beyond the border. If so,
 repositions the rectangle at the border.
 */
 	//deals with x border
-	this.xVelocity *= -1;
+	this.xVelocity *= this.physics.eAbsorb;
 	if (this.x >= gameCanvas.width - this.width) {
 		this.x = gameCanvas.width - this.width;
 	}
@@ -118,11 +118,11 @@ repositions the rectangle at the border.
 		this.x = 0;
 	}
 	else {
-		this.xVelocity *= this.physics.eAbsorb;
+		this.xVelocity /= this.physics.eAbsorb;
 	}
 	
 	//deals with y border
-	this.yVelocity *= -1;
+	this.yVelocity *= this.physics.eAbsorb;
 	if (this.y >= gameCanvas.height - this.height) {
 		this.y = gameCanvas.height - this.height;
 	}
@@ -130,7 +130,7 @@ repositions the rectangle at the border.
 		this.y = 0;
 	}
 	else {
-		this.yVelocity *= this.physics.eAbsorb;
+		this.yVelocity /= this.physics.eAbsorb;
 	}
 
 }
@@ -147,7 +147,7 @@ Inherits from Shape
 function Circle(xloc, yloc, radius, fillStyle, physics) {
 	Shape.call(this, xloc, yloc, fillStyle, false, physics);
 	this.radius = radius;
-	this.circAccel = 25;
+	this.circAccel = 5;
 	this.timer = false;
 	this.xAccel = 0;
 	this.yAccel = 0;
@@ -181,7 +181,7 @@ Circle.prototype.applyAccel = function(time) {
 			this.yAccel = this.circAccel * Math.sin(angle);
 			console.info("xAccel is " + this.xAccel + " and yAccel is " + this.yAccel);
 			this.timer = false;
-		}.bind(this), Math.random() * 5000 + 5000);
+		}.bind(this), Math.random() * this.physics.randAccel + this.physics.randAccel);
 		this.timer = true;
 	}
 	this.xVelocity += this.xAccel * time;
@@ -197,7 +197,7 @@ Determines if the circle is positioned beyond the border. If so,
 repositions the circle at the border.
 */
 	//deals with x border
-	this.xVelocity *= -1;
+	this.xVelocity *= this.physics.eAbsorb;
 	if (this.x >= gameCanvas.width - this.radius) {
 		this.x = gameCanvas.width - this.radius;
 	}
@@ -205,11 +205,11 @@ repositions the circle at the border.
 		this.x = 0 + this.radius;
 	}
 	else {
-		this.xVelocity *= this.physics.eAbsorb;
+		this.xVelocity /= this.physics.eAbsorb;
 	}
 	
 	//deals with y border
-	this.yVelocity *= -1;
+	this.yVelocity *= this.physics.eAbsorb;
 	if (this.y >= gameCanvas.height - this.radius) {
 		this.y = gameCanvas.height - this.radius;
 	}
@@ -217,7 +217,7 @@ repositions the circle at the border.
 		this.y = 0 +this.radius;
 	}
 	else {
-		this.yVelocity *= this.physics.eAbsorb;
+		this.yVelocity /= this.physics.eAbsorb;
 	}
 }
 

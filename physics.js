@@ -6,9 +6,11 @@ var gamePhysics = {
 	//rate of increase for moving shapes
 	acceleration: 200,
 	//top limit on speed for objects to move
-	maxSpeed: 100,
+	maxSpeed: 40,
 	//energy absorbtion by walls
-	eAbsorb: -1
+	eAbsorb: -.75,
+	//time until random accel choice in milliseconds
+	randAccel: 250
 };
 
 
