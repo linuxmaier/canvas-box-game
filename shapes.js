@@ -153,7 +153,7 @@ Inherits from Shape
 function Circle(xloc, yloc, radius, fillStyle, physics) {
 	Shape.call(this, xloc, yloc, fillStyle, false, physics);
 	this.radius = radius;
-	this.circAccel = 10;
+	this.circAccel = 20;
 	this.timer = false;
 	this.xAccel = 0;
 	this.yAccel = 0;
