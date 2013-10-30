@@ -58,6 +58,7 @@ if (!Array.prototype.indexOf) {
 
 </div>
 <script>
+console.info("top of script");
 //creates frame request callback based on browser
 (function() {
   var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -76,9 +77,9 @@ var zone = [];
 //sets registers keypresses as true for elements corresponding to keycodes
 document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
-
+console.info("creating objects");
 testRect1 = new Rectangle(0, 0, 100, 50, "#FFFFFF", true, gamePhysics, keys, [37, 38, 39, 40]);
-
+console.info("created Rect1");
 testRect2 = new Rectangle(200, 0, 50, 100, "#000000", true, gamePhysics, keys, [65, 87, 68, 83]);
 
 testCirc1 = new Circle(100, 100, 30, "#DDDDDD", gamePhysics);

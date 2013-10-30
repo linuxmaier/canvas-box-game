@@ -1,6 +1,5 @@
 
 function Shape(xloc, yloc, fillStyle, controlled, physics) {
-
 /*super class that contains all shapes in game. includes location
 and velocity info, since all objects will have location and some
 may move. Also contains fill style and border defaults*/
@@ -22,14 +21,21 @@ Shape.prototype.move = function(time) {
 	provided velocity multiplied by time. Also ensures
 	that velocity doesn't exceed the physics' maxSpeed
 	*/
-	if (this.xVelocity >= this.physics.maxSpeed) { this.xVelocity = this.physics.maxSpeed; }
-	else if (this.xVelocity <= -this.physics.maxSpeed) { this.xVelocity = -this.physics.maxSpeed; }
 
-	if (this.yVelocity >= this.physics.maxSpeed) { this.yVelocity = this.physics.maxSpeed; }
-	else if (this.yVelocity <= -this.physics.maxSpeed) { this.yVelocity = -this.physics.maxSpeed; }
-	
+	if (!((this.xVelocity == 0) && (this.yVelocity == 0))) {
+
+		var linearSpeed = Math.sqrt((this.xVelocity*this.xVelocity) + (this.yVelocity*this.yVelocity));	
+		console.info("linearSpeed is " + linearSpeed);
+		if (linearSpeed >= this.physics.maxSpeed) {
+			console.info("attempting to slow the beast");
+			this.xVelocity /= (linearSpeed / this.physics.maxSpeed);
+			this.yVelocity /= (linearSpeed / this.physics.maxSpeed);
+		}
+	}
+
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
+
 }
 
 /*
@@ -147,7 +153,7 @@ Inherits from Shape
 function Circle(xloc, yloc, radius, fillStyle, physics) {
 	Shape.call(this, xloc, yloc, fillStyle, false, physics);
 	this.radius = radius;
-	this.circAccel = 5;
+	this.circAccel = 10;
 	this.timer = false;
 	this.xAccel = 0;
 	this.yAccel = 0;
@@ -172,14 +178,14 @@ Circle.prototype.draw = function(ctext) {
 
 Circle.prototype.applyAccel = function(time) {
 	if (!this.timer) {
-		console.info("timer off");
+		//console.info("timer off");
 		setTimeout(function() {
-			console.info("timeout ran");
+			//console.info("timeout ran");
 			var angle = Math.random() * 2 * Math.PI;
 	
 			this.xAccel = this.circAccel * Math.cos(angle);
 			this.yAccel = this.circAccel * Math.sin(angle);
-			console.info("xAccel is " + this.xAccel + " and yAccel is " + this.yAccel);
+			//console.info("xAccel is " + this.xAccel + " and yAccel is " + this.yAccel);
 			this.timer = false;
 		}.bind(this), Math.random() * this.physics.randAccel + this.physics.randAccel);
 		this.timer = true;

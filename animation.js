@@ -38,6 +38,6 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);
 	}
-
+	console.info(testRect1.xVelocity);
 	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
 }	
