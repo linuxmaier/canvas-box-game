@@ -2,9 +2,9 @@
 
 var gamePhysics = {
 	//multiplier applie to velocity to slow movement
-	surfaceFric: .95,
+	surfaceFric: .99,
 	//rate of increase for moving shapes
-	acceleration: 200,
+	acceleration: 20,
 	//top limit on speed for objects to move
 	maxSpeed: 40,
 	//energy absorbtion by walls
