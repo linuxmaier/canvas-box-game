@@ -40,12 +40,12 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 				shapeArray[i].collided = shapeArray[i].checkCollision(shapeArray[j]);
 			}
 		}
-		shapeArray[i].borderAdjust(gameCanvas);
 		if (shapeArray[i].collided) {
+			console.info("collided!");
 			shapeArray[i].fillStyle = "#FF0066";
 		}
+		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);
-		console.info(shapeArray[i].collided);
 	}
 	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
 }	
