@@ -106,8 +106,19 @@ Rectangle.prototype.applyAccel = function(time) {
 
 Rectangle.prototype.checkCollision = function(shape) {
 	if (shape instanceof Rectangle) {
-		
+		//I'm going to hell for this line of code...
+		/*
+		returns false the maximum edge of one rectangle minus the minimum edge of 
+		the other is greater than their two edges side by side, indicating that 
+		there would be a gap. If either the x or the y  side report a gap, returns 
+		false. Otherwise, returns true. 
+		*/
+		return !((max(this.y + this.height, shape.y + shape.height) - min(this.y, shape.y) > this.height + shape.height) ||
+		(max(this.x + this.width, shape.x + shape.width) - min(this.x, this.width) > this.width + shape.width));
 	}	
+	if (shape instanceof Circle) {
+		//implement circle collision
+	}
 }
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
