@@ -104,7 +104,11 @@ Rectangle.prototype.applyAccel = function(time) {
 	}
 }
 
-
+Rectangle.prototype.checkCollision = function(shape) {
+	if (shape instanceof Rectangle) {
+		
+	}	
+}
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
 /*
