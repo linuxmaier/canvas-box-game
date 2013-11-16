@@ -35,9 +35,17 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	for (var i = 0; i < shapeArray.length; i++) {
 		shapeArray[i].applyAccel(time); 
 		shapeArray[i].move(time);
+		for (var j = 0; j < shapeArray.length; j++) {
+			if (!(shapeArray[i] === shapeArray[j])) { 
+				shapeArray[i].collided = shapeArray[i].checkCollision(shapeArray[j]);
+			}
+		}
 		shapeArray[i].borderAdjust(gameCanvas);
+		if (shapeArray[i].collided) {
+			shapeArray[i].fillStyle = "#FF0066";
+		}
 		shapeArray[i].draw(ctext);
+		console.info(shapeArray[i].collided);
 	}
-	console.info(testRect1.xVelocity);
 	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
 }	

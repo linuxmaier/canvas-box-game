@@ -12,6 +12,7 @@ may move. Also contains fill style and border defaults*/
 	this.yVelocity = 0;
 	this.control = controlled;
 	this.physics = physics;
+	this.collided = false;
 }
 
 Shape.prototype.move = function(time) {
@@ -25,9 +26,7 @@ Shape.prototype.move = function(time) {
 	if (!((this.xVelocity == 0) && (this.yVelocity == 0))) {
 
 		var linearSpeed = Math.sqrt((this.xVelocity*this.xVelocity) + (this.yVelocity*this.yVelocity));	
-		console.info("linearSpeed is " + linearSpeed);
 		if (linearSpeed >= this.physics.maxSpeed) {
-			console.info("attempting to slow the beast");
 			this.xVelocity /= (linearSpeed / this.physics.maxSpeed);
 			this.yVelocity /= (linearSpeed / this.physics.maxSpeed);
 		}
@@ -113,11 +112,12 @@ Rectangle.prototype.checkCollision = function(shape) {
 		there would be a gap. If either the x or the y  side report a gap, returns 
 		false. Otherwise, returns true. 
 		*/
-		return !((max(this.y + this.height, shape.y + shape.height) - min(this.y, shape.y) > this.height + shape.height) ||
-		(max(this.x + this.width, shape.x + shape.width) - min(this.x, this.width) > this.width + shape.width));
+		return !((Math.max(this.y + this.height, shape.y + shape.height) - Math.min(this.y, shape.y) > this.height + shape.height) ||
+		(Math.max(this.x + this.width, shape.x + shape.width) - Math.min(this.x, this.width) > this.width + shape.width));
 	}	
 	if (shape instanceof Circle) {
 		//implement circle collision
+		return false;
 	}
 }
 
@@ -193,14 +193,11 @@ Circle.prototype.draw = function(ctext) {
 
 Circle.prototype.applyAccel = function(time) {
 	if (!this.timer) {
-		//console.info("timer off");
 		setTimeout(function() {
-			//console.info("timeout ran");
 			var angle = Math.random() * 2 * Math.PI;
 	
 			this.xAccel = this.circAccel * Math.cos(angle);
 			this.yAccel = this.circAccel * Math.sin(angle);
-			//console.info("xAccel is " + this.xAccel + " and yAccel is " + this.yAccel);
 			this.timer = false;
 		}.bind(this), Math.random() * this.physics.randAccel + this.physics.randAccel);
 		this.timer = true;
@@ -208,6 +205,11 @@ Circle.prototype.applyAccel = function(time) {
 	this.xVelocity += this.xAccel * time;
 	this.yVelocity += this.yAccel * time;
 }
+
+Circle.prototype.checkCollision = function(shape) {
+	return false;
+}
+
 Circle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for circles.
