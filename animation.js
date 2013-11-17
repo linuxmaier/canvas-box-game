@@ -8,22 +8,15 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 
 */
 
-function animate (shapeArray, ctext, gameCanvas, startTime) {
+function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime) {
 	//this is the time elapsed since the last frame. The divisor is 
 	//arbitrary, chosen by what feels right.
 	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
 	/*
-	I need to figure out how to impement object collision.
-
-	Possible solutions: determine upper limit to objects
-	
-	cut canvas into sections and determine where square 
-	is before detecting collisions with objects in its section.
-
-	implement clever collision detection algorithm.
-
-	Thinking either first or second option works best for this.
+	going to go with quad-tree, I think. Either that or a static subdivision of the play area,
+	but I think quad-tree works best in terms of the scalability of the game, in case I want
+	to make lots more objects on the screen.
 	*/
 
 	/* 
@@ -35,17 +28,13 @@ function animate (shapeArray, ctext, gameCanvas, startTime) {
 	for (var i = 0; i < shapeArray.length; i++) {
 		shapeArray[i].applyAccel(time); 
 		shapeArray[i].move(time);
-		for (var j = 0; j < shapeArray.length; j++) {
-			if (!(shapeArray[i] === shapeArray[j])) { 
-				shapeArray[i].collided = shapeArray[i].checkCollision(shapeArray[j]);
+		shapeArray[i].borderAdjust(gameCanvas);
+		for (var j = i; j < shapeArray.length; j++) {
+			if (shapeArray[i].checkCollision(shapeArray[j])) {
+				confirmedCollisions.push([shapeArray[i], shapeArray[j]]);
 			}
 		}
-		if (shapeArray[i].collided) {
-			console.info("collided!");
-			shapeArray[i].fillStyle = "#FF0066";
-		}
-		shapeArray[i].borderAdjust(gameCanvas);
 		shapeArray[i].draw(ctext);
 	}
-	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, time)});
+	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time)});
 }	
