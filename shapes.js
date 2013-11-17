@@ -6,6 +6,7 @@ may move. Also contains fill style and border defaults*/
 	//this.x and this.y refer to the center of shapes.
 	this.x = xloc;
 	this.y = yloc;
+	this.origStyle = fillStyle;
 	this.fillStyle = fillStyle;
 	this.borderWidth = 1;
 	this.xVelocity = 0;

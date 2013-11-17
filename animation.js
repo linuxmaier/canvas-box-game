@@ -18,11 +18,20 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	but I think quad-tree works best in terms of the scalability of the game, in case I want
 	to make lots more objects on the screen.
 	*/
-
+	for (var g = 0; g < shapeArray.length; g++) {
+		if (shapeArray[g].collided) {
+			shapeArray[g].fillStyle = "#FF0066";
+		}
+		else {
+			shapeArray[g].fillStyle = shapeArray[g].origStyle;
+		}
+		shapeArray[g].collided = false;
+	}
+	
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 	for (var h = 0; h < confirmedCollisions.length; h++) {
-		confirmedCollisions[h][0].fillStyle = "#FF0066";
-		confirmedCollisions[h][1].fillStyle = "#FF0066";
+		confirmedCollisions[h][0].collided = true;
+		confirmedCollisions[h][1].collided = true;
 	}
 	//clears confirmedCollisions
 	confirmedCollisions.length = 0;
