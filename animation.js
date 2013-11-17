@@ -24,7 +24,10 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	test animations. Those are below:
 	*/
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
+	for (var h = 0; h < confirmedCollisions.length; h++) {
+		//resolve collisions
+	}
+	confirmedCollisions.clear();
 	for (var i = 0; i < shapeArray.length; i++) {
 		shapeArray[i].applyAccel(time); 
 		shapeArray[i].move(time);
