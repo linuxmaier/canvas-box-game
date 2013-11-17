@@ -27,7 +27,9 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	for (var h = 0; h < confirmedCollisions.length; h++) {
 		//resolve collisions
 	}
-	confirmedCollisions.clear();
+	//clears confirmedCollisions
+	confirmedCollisions.length = 0;
+	
 	for (var i = 0; i < shapeArray.length; i++) {
 		shapeArray[i].applyAccel(time); 
 		shapeArray[i].move(time);
