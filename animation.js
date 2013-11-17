@@ -19,13 +19,10 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	to make lots more objects on the screen.
 	*/
 
-	/* 
-	until I have that figured out, I'll just run some
-	test animations. Those are below:
-	*/
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 	for (var h = 0; h < confirmedCollisions.length; h++) {
-		//resolve collisions
+		confirmedCollisions[h][0].fillStyle = "#FF0066";
+		confirmedCollisions[h][1].fillStyle = "#FF0066";
 	}
 	//clears confirmedCollisions
 	confirmedCollisions.length = 0;
@@ -35,7 +32,7 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 		shapeArray[i].move(time);
 		shapeArray[i].borderAdjust(gameCanvas);
 		for (var j = i; j < shapeArray.length; j++) {
-			if (shapeArray[i].checkCollision(shapeArray[j])) {
+			if (shapeArray[i].checkCollision(shapeArray[j]) && !(shapeArray[i] === shapeArray[j])) {
 				confirmedCollisions.push([shapeArray[i], shapeArray[j]]);
 			}
 		}

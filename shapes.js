@@ -107,8 +107,9 @@ Rectangle.prototype.checkCollision = function(shape) {
 	
 	if (shape instanceof Rectangle) {
 		//implement rect collision
+		return !(Math.max(this.x, shape.x) - Math.min(this.x, shape.x) > (this.width / 2) + (shape.width / 2) || 
+		Math.max(this.y, shape.y) - Math.min(this.y, shape.y) > (this.height / 2) + (shape.height / 2));
 		
-		return false;
 	}	
 	if (shape instanceof Circle) {
 		//implement circle collision
