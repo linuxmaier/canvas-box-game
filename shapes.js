@@ -3,7 +3,7 @@ function Shape(xloc, yloc, fillStyle, controlled, physics) {
 /*super class that contains all shapes in game. includes location
 and velocity info, since all objects will have location and some
 may move. Also contains fill style and border defaults*/
-
+	//this.x and this.y refer to the center of shapes.
 	this.x = xloc;
 	this.y = yloc;
 	this.fillStyle = fillStyle;
@@ -66,7 +66,7 @@ Rectangle.prototype.draw = function(ctext) {
 //and coloring info. Requires that the context is passed to it
 
 	ctext.beginPath();
-	ctext.rect(this.x, this.y, this.width, this.height);
+	ctext.rect((this.x - this.width / 2), (this.y - this.height / 2), this.width, this.height);
 	ctext.fillStyle = this.fillStyle;
 	ctext.fill();
 	ctext.lineWidth = this.borderWidth;
@@ -104,8 +104,10 @@ Rectangle.prototype.applyAccel = function(time) {
 }
 
 Rectangle.prototype.checkCollision = function(shape) {
+	
 	if (shape instanceof Rectangle) {
 		//implement rect collision
+		
 		return false;
 	}	
 	if (shape instanceof Circle) {
@@ -125,11 +127,11 @@ repositions the rectangle at the border.
 */
 	//deals with x border
 	this.xVelocity *= this.physics.eAbsorb;
-	if (this.x >= gameCanvas.width - this.width) {
-		this.x = gameCanvas.width - this.width;
+	if (this.x >= gameCanvas.width - (this.width / 2)) {
+		this.x = gameCanvas.width - (this.width / 2);
 	}
-	else if (this.x <= 0) {
-		this.x = 0;
+	else if (this.x <= this.width / 2) {
+		this.x = this.width / 2;
 	}
 	else {
 		this.xVelocity /= this.physics.eAbsorb;
@@ -137,11 +139,11 @@ repositions the rectangle at the border.
 	
 	//deals with y border
 	this.yVelocity *= this.physics.eAbsorb;
-	if (this.y >= gameCanvas.height - this.height) {
-		this.y = gameCanvas.height - this.height;
+	if (this.y >= gameCanvas.height - (this.height / 2)) {
+		this.y = gameCanvas.height - (this.height / 2);
 	}
-	else if (this.y <= 0) {
-		this.y = 0;
+	else if (this.y <= this.height / 2) {
+		this.y = this.height / 2;
 	}
 	else {
 		this.yVelocity /= this.physics.eAbsorb;
