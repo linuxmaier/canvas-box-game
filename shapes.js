@@ -116,6 +116,7 @@ Rectangle.prototype.checkCollision = function(shape) {
 		//implement circle collision
 		return false;
 	}
+	return false;
 }
 
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
@@ -204,6 +205,11 @@ Circle.prototype.applyAccel = function(time) {
 }
 
 Circle.prototype.checkCollision = function(shape) {
+	if (shape instanceof Circle) {
+		var distance = Math.pow(this.x - shape.x, 2) + Math.pow(this.y - shape.y, 2);
+		var distance = Math.sqrt(distance);
+		return distance < this.radius + shape.radius;
+	}	
 	return false;
 }
 
