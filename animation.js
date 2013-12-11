@@ -48,4 +48,5 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 		shapeArray[i].draw(ctext);
 	}
 	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time)});
-}	
+}
+

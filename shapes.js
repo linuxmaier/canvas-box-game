@@ -38,6 +38,13 @@ Shape.prototype.move = function(time) {
 
 }
 
+Shape.prototype.checkCollision = function(shape) {
+	axes = this.provideAxes(other).concat(shape.provideAxes(this));
+	for ( i = 0; i < axes.length(); i++ ) {
+		
+	}
+}
+
 /*
 
 Rectangle is the main game object. It needs to be controllable 
@@ -52,6 +59,10 @@ function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, ke
 	this.width = width;
 	this.height = height;
 	this.keys = keys;
+	this.corners = [[xloc - this.width/2, yloc - this.height/2],
+			[xloc - this.width/2, yloc + this.height/2],
+			[xloc + this.width/2, yloc - this.height/2],
+			[xloc + this.width/2, yloc + this.height/2]];
 	this.l = keymap[0];
 	this.u = keymap[1];
 	this.r = keymap[2];
