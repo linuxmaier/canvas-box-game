@@ -7,7 +7,7 @@ may move. Also contains fill style and border defaults*/
 	this.x = xloc;
 	this.y = yloc;
 	this.origStyle = fillStyle;
-	this.fillStyle = fillStyle;
+	this.fillStyle = this.origStyle;
 	this.borderWidth = 1;
 	this.xVelocity = 0;
 	this.yVelocity = 0;
