@@ -186,7 +186,7 @@ Rectangle.prototype.getRegion = function(shape) {
 		if (shape.y < this.cnr[0].y) {
 			return 0;
 		}
-		if (shape.y > this.cnr[0].y) {
+		if (shape.y > this.cnr[3].y) {
 			return 6;
 		}
 	}
@@ -298,7 +298,7 @@ Circle.prototype.getAxes = function(shape) {
 	if (shape instanceof Circle) {
 		return new Vec2(this.x - shape.x, this.y - shape.y);
 	}
-	region = other.getRegion();
+	region = shape.getRegion(this);
 	if (region % 2 != 0) {
 		return [];
 	}
