@@ -39,7 +39,7 @@ Shape.prototype.move = function(time) {
 }
 
 Shape.prototype.checkCollision = function(shape) {
-	axes = this.provideAxes(other).concat(shape.provideAxes(this));
+	axes = this.getAxes(other).concat(shape.getAxes(this));
 	for ( i = 0; i < axes.length(); i++ ) {
 		
 	}
@@ -165,6 +165,12 @@ repositions the rectangle at the border.
 
 }
 
+Rectangle.prototype.getAxes = function(shape) {
+
+	return [new Vec2(this.cnr[1].x - this.cnr[0].x, this.cnr[1].y - this.cnr[0].y), new Vec2(this.cnr[3].x - this.cnr[0].x, this.cnr[3].y - this.cnr[0].y)];
+
+}
+
 /*
 
 Circle is the secondary object in the game. They are animated without
@@ -258,3 +264,13 @@ repositions the circle at the border.
 	}
 }
 
+Circle.prototype.getAxes(shape) {
+	if (shape instanceof Circle) {
+		return new Vec2(this.x - shape.x, this.y - shape.y);
+	}
+	region = other.getRegion();
+	if (region % 2 != 0) {
+		return [];
+	}
+	return [new Vec2(shape.cnr[region/2].x - this.x, shape.cnr[region/2].y - this.y)];
+}
