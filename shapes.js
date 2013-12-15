@@ -1,3 +1,7 @@
+function Point(x_coord, y_coord) {
+	this.x = x_coord;
+	this.y = y_coord;
+}
 
 function Shape(xloc, yloc, fillStyle, controlled, physics) {
 /*super class that contains all shapes in game. includes location
@@ -35,12 +39,18 @@ Shape.prototype.move = function(time) {
 
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
+	if (this.cnr) {
+		for (i = 0; i < this.cnr.length; i++) {
+			this.cnr[i].x += this.xVelocity * time;
+			this.cnr[i].y += this.yVelocity * time;
+		}
+	}
 
 }
 
 Shape.prototype.checkCollision = function(shape) {
 	axes = this.getAxes(other).concat(shape.getAxes(this));
-	for ( i = 0; i < axes.length(); i++ ) {
+	for ( i = 0; i < axes.length; i++ ) {
 		
 	}
 }
@@ -59,10 +69,10 @@ function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, ke
 	this.width = width;
 	this.height = height;
 	this.keys = keys;
-	this.corners = [[xloc - this.width/2, yloc - this.height/2],
-			[xloc - this.width/2, yloc + this.height/2],
-			[xloc + this.width/2, yloc - this.height/2],
-			[xloc + this.width/2, yloc + this.height/2]];
+	this.cnr = [new Point(xloc - this.width/2, yloc - this.height/2),
+		    new Point(xloc + this.width/2, yloc - this.height/2),
+		    new Point(xloc + this.width/2, yloc + this.height/2),
+		    new Point(xloc - this.width/2, yloc + this.height/2)];
 	this.l = keymap[0];
 	this.u = keymap[1];
 	this.r = keymap[2];
@@ -264,7 +274,7 @@ repositions the circle at the border.
 	}
 }
 
-Circle.prototype.getAxes(shape) {
+Circle.prototype.getAxes = function(shape) {
 	if (shape instanceof Circle) {
 		return new Vec2(this.x - shape.x, this.y - shape.y);
 	}
