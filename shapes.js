@@ -181,6 +181,26 @@ Rectangle.prototype.getAxes = function(shape) {
 
 }
 
+Rectangle.prototype.getRegion = function(shape) {
+	if (shape.x < this.cnr[0].x) {
+		if (shape.y < this.cnr[0].y) {
+			return 0;
+		}
+		if (shape.y > this.cnr[0].y) {
+			return 6;
+		}
+	}
+	if (shape.x > this.cnr[1].x) {
+		if (shape.y < this.cnr[1].y) {
+			return 2;
+		}
+		if (shape.y > this.cnr[2].y) {
+			return 4;
+		}
+	}
+	return 1;
+}
+
 /*
 
 Circle is the secondary object in the game. They are animated without
