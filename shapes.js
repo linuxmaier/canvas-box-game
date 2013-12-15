@@ -1,4 +1,6 @@
 function Point(x_coord, y_coord) {
+	//for keeping track of corners
+
 	this.x = x_coord;
 	this.y = y_coord;
 }
@@ -177,11 +179,21 @@ repositions the rectangle at the border.
 
 Rectangle.prototype.getAxes = function(shape) {
 
-	return [new Vec2(this.cnr[1].x - this.cnr[0].x, this.cnr[1].y - this.cnr[0].y), new Vec2(this.cnr[3].x - this.cnr[0].x, this.cnr[3].y - this.cnr[0].y)];
+	rectAxes =  [new Vec2(this.cnr[1].x - this.cnr[0].x, this.cnr[1].y - this.cnr[0].y), new Vec2(this.cnr[3].x - this.cnr[0].x, this.cnr[3].y - this.cnr[0].y)];
+
+	//normalize axis vectors
+	for (i = 0; i < rectAxes.length; i ++) {
+		if (!(rectAxes[i].x == 0 && rectAxes[i].y == 0)) {
+			rectAxes[i].normalize();
+		}
+	}
+
+	return rectAxes;
 
 }
 
 Rectangle.prototype.getRegion = function(shape) {
+	//Used in Circle.getAxes
 	if (shape.x < this.cnr[0].x) {
 		if (shape.y < this.cnr[0].y) {
 			return 0;
@@ -296,11 +308,19 @@ repositions the circle at the border.
 
 Circle.prototype.getAxes = function(shape) {
 	if (shape instanceof Circle) {
-		return new Vec2(this.x - shape.x, this.y - shape.y);
+		circVec = new Vec2(this.x - shape.x, this.y - shape.y);
+		if (!(circVec.x == 0 && circVec.y == 0)) {
+			circVec.normalize();
+		}
+		return [circVec];
 	}
 	region = shape.getRegion(this);
 	if (region % 2 != 0) {
 		return [];
 	}
-	return [new Vec2(shape.cnr[region/2].x - this.x, shape.cnr[region/2].y - this.y)];
+	circVec = new Vec2(shape.cnr[region/2].x - this.x, shape.cnr[region/2].y - this.y);
+	if (!(circVec.x == 0 && circVec.y == 0)) {
+		circVec.normalize();	
+	}
+	return [circVec];
 }
