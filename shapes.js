@@ -50,6 +50,7 @@ Shape.prototype.move = function(time) {
 
 }
 
+
 Shape.prototype.checkCollision = function(shape) {
 		axes = this.getAxes(shape).concat(shape.getAxes(this));
 
@@ -163,9 +164,11 @@ repositions the rectangle at the border.
 	this.xVelocity *= this.physics.eAbsorb;
 	if (this.x >= gameCanvas.width - (this.width / 2)) {
 		this.x = gameCanvas.width - (this.width / 2);
+		this.calcCorners();
 	}
 	else if (this.x <= this.width / 2) {
 		this.x = this.width / 2;
+		this.calcCorners();
 	}
 	else {
 		this.xVelocity /= this.physics.eAbsorb;
@@ -175,13 +178,23 @@ repositions the rectangle at the border.
 	this.yVelocity *= this.physics.eAbsorb;
 	if (this.y >= gameCanvas.height - (this.height / 2)) {
 		this.y = gameCanvas.height - (this.height / 2);
+		this.calcCorners();
 	}
 	else if (this.y <= this.height / 2) {
 		this.y = this.height / 2;
+		this.calcCorners();
 	}
 	else {
 		this.yVelocity /= this.physics.eAbsorb;
 	}
+}
+
+Rectangle.prototype.calcCorners = function() {
+
+	this.cnr = [new Point(this.x - this.width/2, this.y - this.height/2),
+		    new Point(this.x + this.width/2, this.y - this.height/2),
+		    new Point(this.x + this.width/2, this.y + this.height/2),
+		    new Point(this.x - this.width/2, this.y + this.height/2)];
 
 }
 
