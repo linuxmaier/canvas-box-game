@@ -41,7 +41,7 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 		shapeArray[i].move(time);
 		shapeArray[i].borderAdjust(gameCanvas);
 		for (var j = i; j < shapeArray.length; j++) {
-			if (shapeArray[i].checkCollision(shapeArray[j]) && !(shapeArray[i] === shapeArray[j])) {
+			if (!(shapeArray[i] === shapeArray[j]) && shapeArray[i].checkCollision(shapeArray[j])) {
 				confirmedCollisions.push([shapeArray[i], shapeArray[j]]);
 			}
 		}

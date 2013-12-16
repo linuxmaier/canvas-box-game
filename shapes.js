@@ -42,7 +42,7 @@ Shape.prototype.move = function(time) {
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
 	if (this.cnr) {
-		for (i = 0; i < this.cnr.length; i++) {
+		for (var i = 0; i < this.cnr.length; i++) {
 			this.cnr[i].x += this.xVelocity * time;
 			this.cnr[i].y += this.yVelocity * time;
 		}
@@ -51,22 +51,27 @@ Shape.prototype.move = function(time) {
 }
 
 
-Shape.prototype.checkCollision = function(shape) {
-		axes = this.getAxes(shape).concat(shape.getAxes(this));
+Shape.prototype.checkCollision = function(other) {
+	var axes = this.getAxes(other).concat(other.getAxes(this));
+	var didCollide = true;
+	var projLengthA = 0;
+	var projLengthB = 0;
+	var centVec;
 
-		for (i = 0; i < axes.length; i++) {
-			axis = axes[i];
-			projLengthA = this.getProj(axis, shape);
-			projLengthB = shape.getProj(axis, this);
+	for (var i = 0; i < axes.length; i++) {
+		var axis = axes[i];
+		projLengthA = this.getProj(axis, other);
+		projLengthB = other.getProj(axis, this);
 
-			centVec = new Vec2(this.x - shape.x, this.y - shape.y);
-			centVec = Math.abs(centVec.dot(axis));
-			
-			if (projLengthA + projLengthB <= centVec) {
-				return false;
-			}
+		centVec = new Vec2(this.x - other.x, this.y - other.y);
+		centVec = Math.abs(centVec.dot(axis));
+		
+		if (projLengthA + projLengthB <= centVec) {
+			console.info("Rect at " + this.y + " passed false.");
+			didCollide = false;
 		}
-		return true;
+	}
+	return didCollide;		
 }
 /*
 
@@ -200,10 +205,10 @@ Rectangle.prototype.calcCorners = function() {
 
 Rectangle.prototype.getAxes = function(shape) {
 
-	rectAxes =  [new Vec2(this.cnr[1].x - this.cnr[0].x, this.cnr[1].y - this.cnr[0].y), new Vec2(this.cnr[3].x - this.cnr[0].x, this.cnr[3].y - this.cnr[0].y)];
+	var rectAxes =  [new Vec2(this.cnr[1].x - this.cnr[0].x, this.cnr[1].y - this.cnr[0].y), new Vec2(this.cnr[3].x - this.cnr[0].x, this.cnr[3].y - this.cnr[0].y)];
 
 	//normalize axis vectors
-	for (i = 0; i < rectAxes.length; i ++) {
+	for (var i = 0; i < rectAxes.length; i ++) {
 		if (!(rectAxes[i].x == 0 && rectAxes[i].y == 0)) {
 			rectAxes[i].normalize();
 		}
@@ -240,10 +245,11 @@ Rectangle.prototype.getProj = function(axis, shape) {
 	var maximum = 0;
 	var mincnr;
 	var maxcnr;
+	var returnVec;
 
-	for (i = 0; i < this.cnr.length; i++) {
-		tempVec = new Vec2(this.cnr[i].x - this.x, this.cnr[i].y - this.y);
-		tempVal = tempVec.dot(axis);
+	for (var i = 0; i < this.cnr.length; i++) {
+		var tempVec = new Vec2(this.cnr[i].x - this.x, this.cnr[i].y - this.y);
+		var tempVal = tempVec.dot(axis);
 		if (tempVal <= minimum) {
 			minimum = tempVal;
 			mincnr = this.cnr[i];
@@ -254,7 +260,7 @@ Rectangle.prototype.getProj = function(axis, shape) {
 		}
 	}
 
-	centersVec = new Vec2(this.x - shape.x, this.y - shape.y);
+	var centersVec = new Vec2(this.x - shape.x, this.y - shape.y);
 	if (centersVec.dot(axis) > 0) {
 		returnVec = new Vec2(mincnr.x - this.x, mincnr.y - this.y);
 		return Math.abs(returnVec.dot(axis));
@@ -359,6 +365,8 @@ repositions the circle at the border.
 }
 
 Circle.prototype.getAxes = function(shape) {
+	var circVec;
+
 	if (shape instanceof Circle) {
 		circVec = new Vec2(this.x - shape.x, this.y - shape.y);
 		if (!(circVec.x == 0 && circVec.y == 0)) {
