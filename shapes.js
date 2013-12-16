@@ -51,12 +51,22 @@ Shape.prototype.move = function(time) {
 }
 
 Shape.prototype.checkCollision = function(shape) {
-	axes = this.getAxes(other).concat(shape.getAxes(this));
-	for ( i = 0; i < axes.length; i++ ) {
-		
-	}
-}
+		axes = this.getAxes(shape).concat(shape.getAxes(this));
 
+		for (i = 0; i < axes.length; i++) {
+			axis = axes[i];
+			projLengthA = this.getProj(axis, shape);
+			projLengthB = shape.getProj(axis, this);
+
+			centVec = new Vec2(this.x - shape.x, this.y - shape.y);
+			centVec = Math.abs(centVec.dot(axis));
+			
+			if (projLengthA + projLengthB <= centVec) {
+				return false;
+			}
+		}
+		return true;
+}
 /*
 
 Rectangle is the main game object. It needs to be controllable 
@@ -126,7 +136,7 @@ Rectangle.prototype.applyAccel = function(time) {
 		this.yVelocity *= this.physics.surfaceFric;
 	}
 }
-
+/*
 Rectangle.prototype.checkCollision = function(shape) {
 	
 	if (shape instanceof Rectangle) {
@@ -136,12 +146,10 @@ Rectangle.prototype.checkCollision = function(shape) {
 		
 	}	
 	if (shape instanceof Circle) {
-		//implement circle collision
-		return false;
 	}
 	return false;
 }
-
+*/
 Rectangle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for rectangles.
@@ -213,6 +221,37 @@ Rectangle.prototype.getRegion = function(shape) {
 	return 1;
 }
 
+Rectangle.prototype.getProj = function(axis, shape) {
+
+	var minimum = 0;
+	var maximum = 0;
+	var mincnr;
+	var maxcnr;
+
+	for (i = 0; i < this.cnr.length; i++) {
+		tempVec = new Vec2(this.cnr[i].x - this.x, this.cnr[i].y - this.y);
+		tempVal = tempVec.dot(axis);
+		if (tempVal <= minimum) {
+			minimum = tempVal;
+			mincnr = this.cnr[i];
+		}
+		if (tempVal >= maximum) {
+			maximum = tempVal;
+			maxcnr = this.cnr[i];
+		}
+	}
+
+	centersVec = new Vec2(this.x - shape.x, this.y - shape.y);
+	if (centersVec.dot(axis) > 0) {
+		returnVec = new Vec2(mincnr.x - this.x, mincnr.y - this.y);
+		return Math.abs(returnVec.dot(axis));
+	}
+	else {
+		returnVec = new Vec2(maxcnr.x - this.x, maxcnr.y - this.y);
+		return Math.abs(returnVec.dot(axis));
+	}
+}
+
 /*
 
 Circle is the secondary object in the game. They are animated without
@@ -262,7 +301,7 @@ Circle.prototype.applyAccel = function(time) {
 	this.xVelocity += this.xAccel * time;
 	this.yVelocity += this.yAccel * time;
 }
-
+/*
 Circle.prototype.checkCollision = function(shape) {
 	if (shape instanceof Circle) {
 		var distance = Math.pow(this.x - shape.x, 2) + Math.pow(this.y - shape.y, 2);
@@ -271,7 +310,7 @@ Circle.prototype.checkCollision = function(shape) {
 	}	
 	return false;
 }
-
+*/
 Circle.prototype.borderAdjust = function(gameCanvas) {
 /*
 runs interactions with the border of the playing area for circles.
@@ -323,4 +362,8 @@ Circle.prototype.getAxes = function(shape) {
 		circVec.normalize();	
 	}
 	return [circVec];
+}
+
+Circle.prototype.getProj = function(axis, shape) {
+	return this.radius;
 }
