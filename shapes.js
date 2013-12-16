@@ -53,7 +53,6 @@ Shape.prototype.move = function(time) {
 
 Shape.prototype.checkCollision = function(other) {
 	var axes = this.getAxes(other).concat(other.getAxes(this));
-	var didCollide = true;
 	var projLengthA = 0;
 	var projLengthB = 0;
 	var centVec;
@@ -67,11 +66,10 @@ Shape.prototype.checkCollision = function(other) {
 		centVec = Math.abs(centVec.dot(axis));
 		
 		if (projLengthA + projLengthB <= centVec) {
-			console.info("Rect at " + this.y + " passed false.");
-			didCollide = false;
+			return false;
 		}
 	}
-	return didCollide;		
+	return true;		
 }
 /*
 
