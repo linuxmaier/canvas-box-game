@@ -13,7 +13,7 @@ This is the main HTML page for the game. It contains the canvas element, links a
 
 animation.js
 
-This runs the animation loop that powers the game. It iterates through an array containing all the game shapes and figures out where they're going, moves them there, draws them and kicks off the next frame.
+This runs the animation loop that powers the game. It iterates through an array containing all the game shapes and figures out where they're going, moves them there, checks to see if there are any collisions, draws them and kicks off the next frame.
 
 shapes.js
 
@@ -22,6 +22,12 @@ This contains all the useful methods for manipulating and creating shapes. Most 
 physics.js
 
 This just contains one object that informs the rest of the game on basic physics principles.
+
+TS_vector2.js
+
+Common vector2 operations
+Author: Tudor Nita | cgrats.com
+Version: 0.51
 
 cbgstyle.css
 
