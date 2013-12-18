@@ -42,10 +42,7 @@ Shape.prototype.move = function(time) {
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
 	if (this.cnr) {
-		for (var i = 0; i < this.cnr.length; i++) {
-			this.cnr[i].x += this.xVelocity * time;
-			this.cnr[i].y += this.yVelocity * time;
-		}
+		this.calcCorners();
 	}
 
 }
@@ -163,6 +160,7 @@ calculating the distance from the right/bottom border.
 Determines if the rectangle is positioned beyond the border. If so,
 repositions the rectangle at the border.
 */
+
 	//deals with x border
 	this.xVelocity *= this.physics.eAbsorb;
 	if (this.x >= gameCanvas.width - (this.width / 2)) {
@@ -189,7 +187,7 @@ repositions the rectangle at the border.
 	}
 	else {
 		this.yVelocity /= this.physics.eAbsorb;
-	}
+	} 
 }
 
 Rectangle.prototype.calcCorners = function() {
