@@ -5,7 +5,7 @@ function Point(x_coord, y_coord) {
 	this.y = y_coord;
 }
 
-function Shape(xloc, yloc, fillStyle, controlled, physics) {
+function Shape(xloc, yloc, fillStyle, physics) {
 /*super class that contains all shapes in game. includes location
 and velocity info, since all objects will have location and some
 may move. Also contains fill style and border defaults*/
@@ -17,7 +17,6 @@ may move. Also contains fill style and border defaults*/
 	this.borderWidth = 1;
 	this.xVelocity = 0;
 	this.yVelocity = 0;
-	this.control = controlled;
 	this.physics = physics;
 	this.collided = false;
 }
@@ -77,8 +76,8 @@ Inherits from Shape
 
 */
 
-function Rectangle(xloc, yloc, width, height, fillStyle, controlled, physics, keys, keymap) {
-	Shape.call(this, xloc, yloc, fillStyle, controlled, physics);
+function Rectangle(xloc, yloc, width, height, fillStyle, physics, keys, keymap) {
+	Shape.call(this, xloc, yloc, fillStyle, physics);
 	this.width = width;
 	this.height = height;
 	this.keys = keys;
@@ -114,28 +113,26 @@ Rectangle.prototype.draw = function(ctext) {
 Rectangle.prototype.applyAccel = function(time) {
 	var xVel = 0;
 	var yVel = 0;
-	if (this.control) {
-		if (this.keys[this.l]) {
-			xVel += this.physics.acceleration * time * -1;
-		}
-		if (this.keys[this.r]) {
-			xVel += this.physics.acceleration * time;
-		}
-	
-		if (this.keys[this.u]) {
-			yVel += this.physics.acceleration * time * -1;
-		}
-		if (this.keys[this.d]) {
-			yVel += this.physics.acceleration * time;
-		}
+	if (this.keys[this.l]) {
+		xVel += this.physics.acceleration * time * -1;
 	}
+	if (this.keys[this.r]) {
+		xVel += this.physics.acceleration * time;
+	}
+	
+	if (this.keys[this.u]) {
+		yVel += this.physics.acceleration * time * -1;
+	}
+	if (this.keys[this.d]) {
+		yVel += this.physics.acceleration * time;
+	}
+
 
 	this.xVelocity += xVel;
 	this.yVelocity += yVel;
-	if (this.control) {
-		this.xVelocity *= this.physics.surfaceFric;
-		this.yVelocity *= this.physics.surfaceFric;
-	}
+	this.xVelocity *= this.physics.surfaceFric;
+	this.yVelocity *= this.physics.surfaceFric;
+
 }
 /*
 Rectangle.prototype.checkCollision = function(shape) {
@@ -277,7 +274,7 @@ Inherits from Shape
 */
 
 function Circle(xloc, yloc, radius, fillStyle, physics) {
-	Shape.call(this, xloc, yloc, fillStyle, false, physics);
+	Shape.call(this, xloc, yloc, fillStyle, physics);
 	this.radius = radius;
 	this.circAccel = 20;
 	this.timer = false;
