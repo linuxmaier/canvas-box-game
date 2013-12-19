@@ -21,7 +21,7 @@ may move. Also contains fill style and border defaults*/
 	this.collided = false;
 }
 
-Shape.prototype.move = function(time) {
+Shape.prototype.move = function(time, gameCanvas) {
 	/*time is required
 	
 	changes position of object based on current or
@@ -40,6 +40,9 @@ Shape.prototype.move = function(time) {
 
 	this.x += this.xVelocity * time;
 	this.y += this.yVelocity * time;
+	
+	this.borderAdjust(gameCanvas);
+	
 	if (this.cnr) {
 		this.calcCorners();
 	}
@@ -162,11 +165,9 @@ repositions the rectangle at the border.
 	this.xVelocity *= this.physics.eAbsorb;
 	if (this.x >= gameCanvas.width - (this.width / 2)) {
 		this.x = gameCanvas.width - (this.width / 2);
-		this.calcCorners();
 	}
 	else if (this.x <= this.width / 2) {
 		this.x = this.width / 2;
-		this.calcCorners();
 	}
 	else {
 		this.xVelocity /= this.physics.eAbsorb;
@@ -176,11 +177,9 @@ repositions the rectangle at the border.
 	this.yVelocity *= this.physics.eAbsorb;
 	if (this.y >= gameCanvas.height - (this.height / 2)) {
 		this.y = gameCanvas.height - (this.height / 2);
-		this.calcCorners();
 	}
 	else if (this.y <= this.height / 2) {
 		this.y = this.height / 2;
-		this.calcCorners();
 	}
 	else {
 		this.yVelocity /= this.physics.eAbsorb;
