@@ -13,6 +13,7 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	//arbitrary, chosen by what feels right.
 	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
+	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time)});
 	/*
 	going to go with quad-tree, I think. Either that or a static subdivision of the play area,
 	but I think quad-tree works best in terms of the scalability of the game, in case I want
@@ -47,6 +48,5 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 		}
 		shapeArray[i].draw(ctext);
 	}
-	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time)});
 }
 
