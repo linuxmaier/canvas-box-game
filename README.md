@@ -23,6 +23,10 @@ physics.js
 
 This just contains one object that informs the rest of the game on basic physics principles.
 
+player.js
+
+This file contains the player object info, as well as some related objects used for containing information needed at player creation.
+
 TS_vector2.js
 
 Common vector2 operations
