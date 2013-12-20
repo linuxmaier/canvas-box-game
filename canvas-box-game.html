@@ -93,7 +93,7 @@ testCirc10 = new Circle(gameCanvas, gamePhysics);
 //objects in shapeArray are drawn in animation.js
 var shapeArray = [player1.shape, player2.shape, testCirc1, testCirc2, testCirc3, testCirc4, testCirc5, testCirc6, testCirc7, testCirc8, testCirc9, testCirc10];
 var confirmedCollisions = [];
-requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, startTime);});
+requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, startTime, gamePhysics);});
 </script>
 </body>
 </html>

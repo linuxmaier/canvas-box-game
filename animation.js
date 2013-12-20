@@ -8,12 +8,12 @@ and feeds a new start time into the next frame via the requestAnimationFrame cal
 
 */
 
-function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime) {
+function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime, physics) {
 	//this is the time elapsed since the last frame. The divisor is 
 	//arbitrary, chosen by what feels right.
 	var time = ((new Date()).getTime() - startTime) / 10000000000000;
 	
-	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time)});
+	requestAnimationFrame(function() {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, time, physics)});
 	/*
 	going to go with quad-tree, I think. Either that or a static subdivision of the play area,
 	but I think quad-tree works best in terms of the scalability of the game, in case I want
@@ -23,11 +23,18 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 		if (shapeArray[g].collided) {
 			shapeArray[g].fillStyle = "#FF0066";
 			if (shapeArray[g].player) {
-				shapeArray[g].player.score += 1;
+				if (!shapeArray[g].collider) {
+					shapeArray[g].player.score += 1;
+				}
+			}
+			else if (shapeArray[g].collider) {
+				shapeArray.splice(g, 1);
+				shapeArray.push(new Circle(gameCanvas, physics));
 			}
 		}
 		else {
 			shapeArray[g].fillStyle = shapeArray[g].origStyle;
+			shapeArray[g].collider = false;
 		}
 		shapeArray[g].collided = false;
 	}
@@ -35,7 +42,13 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	ctext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 	for (var h = 0; h < confirmedCollisions.length; h++) {
 		confirmedCollisions[h][0].collided = true;
+		if (confirmedCollisions[h][1] instanceof Rectangle) {
+			confirmedCollisions[h][0].collider = true;
+		}
 		confirmedCollisions[h][1].collided = true;
+		if (confirmedCollisions[h][0] instanceof Rectangle) {
+			confirmedCollisions[h][1].collider = true;
+		}
 	}
 	//clears confirmedCollisions
 	confirmedCollisions.length = 0;
