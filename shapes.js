@@ -79,8 +79,9 @@ Inherits from Shape
 
 */
 
-function Rectangle(xloc, yloc, width, height, fillStyle, physics, keys, keymap) {
+function Rectangle(xloc, yloc, width, height, fillStyle, physics, keys, keymap, player) {
 	Shape.call(this, xloc, yloc, fillStyle, physics);
+	this.player = player;
 	this.width = width;
 	this.height = height;
 	this.keys = keys;
@@ -272,9 +273,12 @@ Inherits from Shape
 
 */
 
-function Circle(xloc, yloc, radius, fillStyle, physics) {
+function Circle(canvas, physics) {
+	var xloc = Math.floor(Math.random() * canvas.width);
+	var yloc = Math.floor(Math.random() * canvas.height);
+	var fillStyle = randomColor();
 	Shape.call(this, xloc, yloc, fillStyle, physics);
-	this.radius = radius;
+	this.radius = Math.ceil(Math.random() * 6) * 10 + 10;
 	this.circAccel = 20;
 	this.timer = false;
 	this.xAccel = 0;

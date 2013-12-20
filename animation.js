@@ -22,6 +22,9 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime)
 	for (var g = 0; g < shapeArray.length; g++) {
 		if (shapeArray[g].collided) {
 			shapeArray[g].fillStyle = "#FF0066";
+			if (shapeArray[g].player) {
+				shapeArray[g].player.score += 1;
+			}
 		}
 		else {
 			shapeArray[g].fillStyle = shapeArray[g].origStyle;

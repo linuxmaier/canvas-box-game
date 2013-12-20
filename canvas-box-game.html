@@ -13,6 +13,7 @@ if (typeof jQuery == 'undefined') {
 <script type="text/javascript" src="shapes.js"></script>
 <script type="text/javascript" src="physics.js"></script>
 <script type="text/javascript" src="animation.js"></script>
+<script type="text/javascript" src="player.js"></script>
 <!-- Import vector math library. Thanks to Tudor Nita at www.cgrats.com -->
 <script type="text/javascript" src="TS_vector2.js"></script>
 <link rel="stylesheet" type="text/css" href="cbgstyle.css">
@@ -70,22 +71,27 @@ var zone = [];
 //sets registers keypresses as true for elements corresponding to keycodes
 document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
-testRect1 = new Rectangle(50, 25, 50, 100, "#FFFFFF", gamePhysics, keys, [37, 38, 39, 40]);
-testRect2 = new Rectangle(200, 250, 100, 50, "#000000", gamePhysics, keys, [65, 87, 68, 83]);
+//testRect1 = new Rectangle(50, 25, 50, 100, "#FFFFFF", gamePhysics, keys, [37, 38, 39, 40]);
+//testRect2 = new Rectangle(200, 250, 100, 50, "#000000", gamePhysics, keys, [65, 87, 68, 83]);
+p1shapeInfo  = new shapeInfo(50, 25, 50, 100, "#FFFFFF", [37, 38, 39, 40]);
+player1 = new Player("Player 1", p1shapeInfo, gamePhysics, keys);
 
-testCirc1 = new Circle(100, 100, 30, "#DDDDDD", gamePhysics);
-testCirc2 = new Circle(50, 200, 40, "#222222", gamePhysics);
-testCirc3 = new Circle(200, 300, 50, "#AAAAAA", gamePhysics);
-testCirc4 = new Circle(20, 20, 20, "#888888", gamePhysics);
-testCirc5 = new Circle(500, 100, 45, "#444444", gamePhysics);
-testCirc6 = new Circle(75, 600, 25, "#666666", gamePhysics);
-testCirc7 = new Circle(80, 400, 35, "#555555", gamePhysics);
-testCirc8 = new Circle(600, 150, 10, "#777777", gamePhysics);
-testCirc9 = new Circle(40, 200, 60, "#333333", gamePhysics);
-testCirc10 = new Circle(20, 350, 55, "#999999", gamePhysics);
+p2shapeInfo = new shapeInfo(200, 250, 100, 50, "#000000", [65, 87, 68, 83]);
+player2 = new Player("Player 2", p2shapeInfo, gamePhysics, keys);
+
+testCirc1 = new Circle(gameCanvas, gamePhysics);
+testCirc2 = new Circle(gameCanvas, gamePhysics);
+testCirc3 = new Circle(gameCanvas, gamePhysics);
+testCirc4 = new Circle(gameCanvas, gamePhysics);
+testCirc5 = new Circle(gameCanvas, gamePhysics);
+testCirc6 = new Circle(gameCanvas, gamePhysics);
+testCirc7 = new Circle(gameCanvas, gamePhysics);
+testCirc8 = new Circle(gameCanvas, gamePhysics);
+testCirc9 = new Circle(gameCanvas, gamePhysics);
+testCirc10 = new Circle(gameCanvas, gamePhysics);
 
 //objects in shapeArray are drawn in animation.js
-var shapeArray = [testRect1, testRect2, testCirc1, testCirc2, testCirc3, testCirc4, testCirc5, testCirc6, testCirc7, testCirc8, testCirc9, testCirc10];
+var shapeArray = [player1.shape, player2.shape, testCirc1, testCirc2, testCirc3, testCirc4, testCirc5, testCirc6, testCirc7, testCirc8, testCirc9, testCirc10];
 var confirmedCollisions = [];
 requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, startTime);});
 </script>
