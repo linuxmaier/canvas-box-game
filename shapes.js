@@ -19,7 +19,7 @@ may move. Also contains fill style and border defaults*/
 	this.yVelocity = 0;
 	this.physics = physics;
 	this.collided = false;
-	this.collider;
+	this.doomed = false;
 }
 
 Shape.prototype.move = function(time, gameCanvas) {
