@@ -27,3 +27,18 @@ function randomColor() {
 	}
 	return color;
 }
+
+function getGrey(value, max) {
+	var color = '#';
+	var hexValue;
+	if (arguments.length < 0) {	
+		var randInt = Math.floor(Math.random() * 16);
+		hexValue = randInt.toString(16);
+	}
+	else {
+		var divisor = max / 16;
+		hexValue = Math.round(value/divisor).toString(16);
+	}
+	if (hexValue.length > 1) { hexValue = "0" + hexValue; }
+	return color += hexValue + hexValue + hexValue;
+}

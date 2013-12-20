@@ -277,13 +277,21 @@ Inherits from Shape
 function Circle(canvas, physics) {
 	var xloc = Math.floor(Math.random() * canvas.width);
 	var yloc = Math.floor(Math.random() * canvas.height);
-	var fillStyle = randomColor();
+	var radius = Math.ceil(Math.random() * 6) * 10;
+	var fillStyle = getGrey(radius, 70);
+
 	Shape.call(this, xloc, yloc, fillStyle, physics);
-	this.radius = Math.ceil(Math.random() * 6) * 10 + 10;
+	this.radius = radius;
 	this.circAccel = 20;
 	this.timer = false;
 	this.xAccel = 0;
 	this.yAccel = 0;
+	/*
+	setTimeout(function() {
+		this.collided = true;
+		this.collider = true;
+		}.bind(this), Math.random * this.physics.killTimer + this.physics.killTimer);
+	*/
 }
 
 Circle.prototype = Object.create(Shape.prototype);

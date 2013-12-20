@@ -10,7 +10,9 @@ var gamePhysics = {
 	//energy absorbtion by walls
 	eAbsorb: -.75,
 	//time until random accel choice in milliseconds
-	randAccel: 250
+	randAccel: 250,
+	//min time until circles self destruct
+	killTimer: 10000
 };
 
 
