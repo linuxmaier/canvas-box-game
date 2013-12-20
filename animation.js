@@ -63,5 +63,17 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime,
 		}
 		shapeArray[i].draw(ctext);
 	}
+	var players = new Array();
+	for (var k = 0; k < shapeArray.length; k++) {
+		if (shapeArray[k].player) {
+			players.push(shapeArray[k].player);
+		}
+	}
+	var scoreString = "";
+	for (var l = 0; l < players.length; l++) {
+		scoreString += players[l].name + ": " + players[l].score + " ";
+	}
+	ctext.font = '12pt Calibri';
+	ctext.fillText(scoreString, 10, gameCanvas.height - 10);
 }
 
