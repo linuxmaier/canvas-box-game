@@ -74,6 +74,7 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime,
 		scoreString += players[l].name + ": " + players[l].score + " ";
 	}
 	ctext.font = '12pt Calibri';
+	ctext.fillStyle = "black";
 	ctext.fillText(scoreString, 10, gameCanvas.height - 10);
 }
 
