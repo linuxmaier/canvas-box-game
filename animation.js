@@ -22,7 +22,7 @@ function animate (shapeArray, ctext, gameCanvas, confirmedCollisions, startTime,
 	for (var h = 0; h < confirmedCollisions.length; h++) {
 		for (var g = 0; g < confirmedCollisions[h].length; g++) {
 			confirmedCollisions[h][g].collided = true;
-			if (confirmedCollisions[h][g].__proto__ == confirmedCollisions[h][(g+1)%2].__proto__) {
+			if (confirmedCollisions[h][g].constructor == confirmedCollisions[h][(g+1)%2].constructor) {
 				confirmedCollisions[h][g].fillStyle = "#FF0066";
 			}
 			else if (confirmedCollisions[h][g] instanceof Circle) {
