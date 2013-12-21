@@ -286,12 +286,7 @@ function Circle(canvas, physics) {
 	this.timer = false;
 	this.xAccel = 0;
 	this.yAccel = 0;
-	/*
-	setTimeout(function() {
-		this.collided = true;
-		this.collider = true;
-		}.bind(this), Math.random * this.physics.killTimer + this.physics.killTimer);
-	*/
+	this.doomMe();
 }
 
 Circle.prototype = Object.create(Shape.prototype);
@@ -393,3 +388,9 @@ Circle.prototype.getAxes = function(shape) {
 Circle.prototype.getProj = function(axis, shape) {
 	return this.radius;
 }
+
+Circle.prototype.doomMe = function() {
+	setTimeout(function() {
+		this.doomed = true;
+	}.bind(this), Math.random() * this.physics.killTimer + this.physics.killTimer);
+}	
