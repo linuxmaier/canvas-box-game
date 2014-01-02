@@ -31,10 +31,6 @@ if (typeof jQuery == 'undefined') {
 </div>
 <script>
 //creates frame request callback based on browser
-/*(function() {
-  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-  window.requestAnimationFrame = requestAnimationFrame;
-})();*/
 (function() {
     var lastTime = 0;
     var vendors = ['webkit', 'moz'];
@@ -62,36 +58,41 @@ if (typeof jQuery == 'undefined') {
 
 var gameCanvas = document.getElementById("boxGame");
 var ctext = gameCanvas.getContext("2d");
+
+//dynamically shrinks the game vertically if it's larger than the current window space.
+if ($(document).height() > $(window).height()) {
+
+	gameCanvas.height -= $(document).height() - $(window).height();
+	
+}
+
+
 var startTime = (new Date()).getTime();
 //stores keypresses
 var keys = [];
 //contains object zones
 var zone = [];
+//objects in shapeArray are drawn in animation.js
+var shapeArray = [];
 
 //sets registers keypresses as true for elements corresponding to keycodes
 document.body.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
 document.body.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
-//testRect1 = new Rectangle(50, 25, 50, 100, "#FFFFFF", gamePhysics, keys, [37, 38, 39, 40]);
-//testRect2 = new Rectangle(200, 250, 100, 50, "#000000", gamePhysics, keys, [65, 87, 68, 83]);
-p1shapeInfo  = new shapeInfo(50, 25, 50, 100, "#FFFFFF", [37, 38, 39, 40]);
+
+
+p1shapeInfo  = new shapeInfo(50, 25, 100, 50, "#FFFFFF", [37, 38, 39, 40]);
 player1 = new Player("Player 1", p1shapeInfo, gamePhysics, keys);
 
 p2shapeInfo = new shapeInfo(200, 250, 100, 50, "#000000", [65, 87, 68, 83]);
 player2 = new Player("Player 2", p2shapeInfo, gamePhysics, keys);
 
-testCirc1 = new Circle(gameCanvas, gamePhysics);
-testCirc2 = new Circle(gameCanvas, gamePhysics);
-testCirc3 = new Circle(gameCanvas, gamePhysics);
-testCirc4 = new Circle(gameCanvas, gamePhysics);
-testCirc5 = new Circle(gameCanvas, gamePhysics);
-testCirc6 = new Circle(gameCanvas, gamePhysics);
-testCirc7 = new Circle(gameCanvas, gamePhysics);
-testCirc8 = new Circle(gameCanvas, gamePhysics);
-testCirc9 = new Circle(gameCanvas, gamePhysics);
-testCirc10 = new Circle(gameCanvas, gamePhysics);
+//adds player shapes to shapeArray
+shapeArray.push(player1.shape, player2.shape);
 
-//objects in shapeArray are drawn in animation.js
-var shapeArray = [player1.shape, player2.shape, testCirc1, testCirc2, testCirc3, testCirc4, testCirc5, testCirc6, testCirc7, testCirc8, testCirc9, testCirc10];
+for (var i = 0; i < gamePhysics.circsPresent; i++) {
+	shapeArray.push(new Circle(gameCanvas, gamePhysics));
+}
+
 var confirmedCollisions = [];
 requestAnimationFrame(function()  {animate(shapeArray, ctext, gameCanvas, confirmedCollisions, startTime, gamePhysics);});
 </script>

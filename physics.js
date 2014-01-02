@@ -1,6 +1,8 @@
 //contains an object which controls the physics constants of the game.
 
 var gamePhysics = {
+	//number of circles
+	circsPresent: 10,
 	//multiplier applie to velocity to slow movement
 	surfaceFric: .95,
 	//rate of increase for moving shapes
