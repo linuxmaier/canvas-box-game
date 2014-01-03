@@ -26,7 +26,7 @@ if (typeof jQuery == 'undefined') {
 <div id="headSection">
 <h1 id="mainHead">Canvas Box Game</h1>
 </div>
-<canvas id="boxGame" width=1200 height=720>Canvas did not render.</canvas>
+<canvas id="boxGame" width=0 height=0>Canvas did not render.</canvas>
 
 </div>
 <script>
@@ -58,13 +58,15 @@ if (typeof jQuery == 'undefined') {
 
 var gameCanvas = document.getElementById("boxGame");
 var ctext = gameCanvas.getContext("2d");
+$("body").height($(window).height() - $("body").offset().top * 2);
+$("body").children().not("#boxGame").width($("body").width());
+$("body").children().not("#boxGame").height($("body").height());
+gameCanvas.width = Math.min($("#app").width() - gameCanvas.offsetLeft, 1200);
+gameCanvas.height = Math.min($("#app").height() - gameCanvas.offsetTop, 700);
+gameCanvas.style.left = ($("#app").width() / 2 - gameCanvas.width / 2) + gameCanvas.offsetLeft + "px"
+gameCanvas.style.position = "absolute";
 
-//dynamically shrinks the game vertically if it's larger than the current window space.
-if ($(document).height() > $(window).height()) {
 
-	gameCanvas.height -= $(document).height() - $(window).height();
-	
-}
 
 
 var startTime = (new Date()).getTime();
